@@ -1,0 +1,49 @@
+<div className="w-full h-[200vh] flex justify-center items-center">
+  <div>
+    <div>
+      <div className="w-full h-full">
+        <JobCards />
+      </div>
+      <div>
+        <div>
+          <img src={card_one} alt="" />
+        </div>
+        <div>
+          <img src={battle_board} alt="" />
+          <p>力と体力で突き進む肉体派。運動やフィジカル系タスクとの相性が抜群。力と体力特化型。運動習慣に最適</p>
+        </div>
+        <div>
+          <img src={previous_half} alt="" />
+          <img src={next_full} alt="" />
+        </div>
+        <div>
+          <img src={use} alt="" />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div className="w-full h-full">
+        <JobCards />
+      </div>
+      <div>
+        <div>
+          <img src={card_two} alt="" />
+        </div>
+        <div>
+          <img src={battle_board} alt="" />
+          <p>武器　鍛錬者用　　　6.0  <br />
+            鍛錬者に受け継がれてきた装備。鍛錬者の力を引き出すために作られた特別な一品。 <br />
+            ジョブと合致した場合+2
+          </p>
+        </div>
+        <div>
+          <img src={previous_full} alt="" />
+          <img src={next_half} alt="" />
+        </div>
+        <div>
+          <img src={use} alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
