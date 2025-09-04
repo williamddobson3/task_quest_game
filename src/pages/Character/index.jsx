@@ -1,6 +1,9 @@
-export {default as Room} from './room';
-export {default as Ticket} from './ticket';
-export {default as TicketEncy} from './ticket_ency';
-export {default as TicketEmpty} from './ticket_empty';
-export {default as TicketFilter} from './ticket_filter';
-export {default as AwakeCharacter} from './awake_character';
+export { default as Room } from './room';
+export { default as Ticket } from './ticket';
+export { default as TicketEncy } from './ticket_ency';
+export { default as TicketEmpty } from './ticket_empty';
+export { default as TicketFilter } from './ticket_filter';
+export { default as AwakeCharacter } from './awake_character';
+export { default as ChracterSelect } from './character_selection';
+export { default as ChracterTutorial } from './character_tutorial';
+export { default as ChracterSelectTutorial } from './character_selec_tutorial';

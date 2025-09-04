@@ -3,7 +3,7 @@ import Login from './pages/Login';
 import LoginForm from './pages/Login/loginform';
 import { Main, Bonus, BonusSun, Card, CardSun, LotteryNot, DiscordNot, TaskAComplete, TaskBComplete, TaskCComplete, GachaBuy, GachaSuccess, GachaFail, Setting, ResetSetting, PoorConnect, Awake } from './pages/Home';
 import { TaskInput, TaskModify, TaskComplete, TaskProgress, TaskFail } from './pages/Task';
-import { Room, Ticket, TicketEncy, TicketEmpty, TicketFilter, AwakeCharacter } from './pages/Character';
+import { Room, Ticket, TicketEncy, TicketEmpty, TicketFilter, AwakeCharacter, ChracterTutorial, ChracterSelect, ChracterSelectTutorial } from './pages/Character';
 import { GachaRoom, GachaOne, GachaTen } from './pages/Gacha';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { BattleMain, Battle, ResultWin } from './pages/Battle';
@@ -78,6 +78,9 @@ function App() {
         <Route path='/eleventh-tutorial' element={<Eleventh />} />
         <Route path='/jobcard' element={<JobCards />} />
         <Route path='/carddesc' element={<CardDesc />} />
+        <Route path='/character-select' element={<ChracterSelect />} />
+        <Route path='/character-tutorial' element={<ChracterTutorial />} />
+        <Route path='/character-select-tutorial' element={<ChracterSelectTutorial />} />
       </Routes>
     </Router>
   )
