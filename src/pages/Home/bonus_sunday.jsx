@@ -10,11 +10,15 @@ import gacha_star from '../../assets/gacha_star.png';
 export default function BonusSun() {
     const navigate = useNavigate();
 
-    // Randomly select between card-today and card-sun pages
+    // Navigate based on day of the week
     const handleBlankCardClick = () => {
-        const cardPages = ['/card-today', '/card-sun'];
-        const randomIndex = Math.floor(Math.random() * cardPages.length);
-        navigate(cardPages[randomIndex]);
+        const today = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        
+        if (today === 0) { // Sunday
+            navigate('/card-sun');
+        } else { // Monday to Saturday
+            navigate('/card-today');
+        }
     };
 
     const handleCompleteClick = () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Main from './main';
 import card_free from '../../assets/card_free.png';
 import board_phone from '../../assets/board_phone.png';
@@ -8,6 +9,12 @@ import left from '../../assets/left.png';
 import right from '../../assets/right.png';
 
 export default function CardSun() {
+    const navigate = useNavigate();
+
+    const handleBackClick = () => {
+        navigate('/bonus-sun');
+    };
+
     return (
         <div className='w-full h-screen relative'>
             <div className='w-full h-full absolute top-0 left-0 opacity-50'>
@@ -15,7 +22,7 @@ export default function CardSun() {
             </div>
             <div className='w-full h-full flex flex-col xl:flex-row justify-start xl:justify-center items-center xl:items-start z-[100] opacity-100 pt-25 xl:gap-10'>
                 <div className='w-[120px] lg:w-[180px] xl:w-[150px] h-auto flex justify-center items-center absolute top-5 left-5'>
-                    <img src={back} alt="back" />
+                    <img src={back} alt="back" className='cursor-pointer hover:opacity-80' onClick={handleBackClick} />
                 </div>
                 <div className='w-[250px] lg:w-[600px] xl:w-[400px] h-auto flex justify-center items-center relative  '>
                     <img src={card_free} alt="card_free" className='w-full' />
