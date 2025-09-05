@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import task_input_panel from '../../assets/task_input_panel.png';
 import work from '../../assets/work.png';
 import study from '../../assets/study.png';
@@ -19,6 +20,12 @@ import archieve from '../../assets/archieve.png';
 
 
 export default function Fifth() {
+  const navigate = useNavigate();
+
+  const handleNext = () => {
+    navigate('/sixth-tutorial');
+  };
+
   return (
     <div className='w-full h-screen flex justify-center items-center'>
       <div className="w-full h-screen flex justify-center items-center bg-[url('src/assets/background_iphone.png')] bg-cover bg-center relative opacity-50">
@@ -80,7 +87,7 @@ export default function Fifth() {
           <img src={hero_man} alt="" />
         </div>
         <div className='w-[150px] lg:w-[300px] xl:w-[200px] absolute top-150 lg:top-280 xl:top-150 right-0 lg:right-10 flex justify-center items-center '>
-          <img src={next} alt="" />
+          <img src={next} alt="" className='cursor-pointer hover:opacity-80' onClick={handleNext} />
         </div>
       </div>
     </div>

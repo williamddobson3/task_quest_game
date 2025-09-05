@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
+import { getPostTutorialRedirect } from '../../utils/loginUtils';
 import muscle_type from '../../assets/muscle_type.png';
 import member from '../../assets/member.png';
 import process from '../../assets/process.png';
@@ -21,6 +23,13 @@ import next from '../../assets/next.png';
 
 
 export default function Eleventh() {
+  const navigate = useNavigate();
+
+  const handleNext = () => {
+    const redirectPath = getPostTutorialRedirect();
+    navigate(redirectPath);
+  };
+
   return (
     <div className='w-full h-screen flex justify-center items-center'>
       <div className="w-full h-screen flex justify-center items-center opacity-50">
@@ -110,7 +119,7 @@ export default function Eleventh() {
           <img src={hero_man} alt="" />
         </div>
         <div className='w-[150px] lg:w-[300px] xl:w-[200px] absolute top-150 lg:top-280 xl:top-150 right-0 lg:right-10 flex justify-center items-center '>
-          <img src={next} alt="" />
+          <img src={next} alt="" className='cursor-pointer hover:opacity-80' onClick={handleNext} />
         </div>
       </div>
     </div>

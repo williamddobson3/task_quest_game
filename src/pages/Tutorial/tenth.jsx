@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import character_room_tablet from '../../assets/character_room_tablet.png';
 import imgear from '../../assets/imgear.png';
 import one from '../../assets/one.png';
@@ -27,6 +28,12 @@ import next from '../../assets/next.png';
 
 
 export default function Tenth() {
+  const navigate = useNavigate();
+
+  const handleNext = () => {
+    navigate('/eleventh-tutorial');
+  };
+
   return (
     <div className='w-full h-screen flex justify-center items-end'>
       <div
@@ -144,7 +151,7 @@ export default function Tenth() {
           <img src={hero_man} alt="" />
         </div>
         <div className='w-[150px] lg:w-[300px] xl:w-[200px] absolute top-175 lg:top-270 xl:top-80 right-0 lg:right-30 xl:right-5 flex justify-center items-center z-[100]'>
-          <img src={next} alt="" />
+          <img src={next} alt="" className='cursor-pointer hover:opacity-80' onClick={handleNext} />
         </div>
         <main className='w-full flex flex-col justify-start items-center absolute top-[-0px] '>
 

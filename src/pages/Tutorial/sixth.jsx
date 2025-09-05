@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import gacha_room_tablet from '../../assets/gacha_room_tablet.png';
 import imgear from '../../assets/imgear.png';
 import one from '../../assets/one.png';
@@ -16,6 +17,12 @@ import next from '../../assets/next.png';
 import hero_man from '../../assets/hero_man.png';
 
 export default function Sixth() {
+  const navigate = useNavigate();
+
+  const handleNext = () => {
+    navigate('/seventh-tutorial');
+  };
+
   return (
     <div className='w-full h-screen flex justify-center items-center'>
       <div
@@ -74,7 +81,7 @@ export default function Sixth() {
           <img src={hero_man} alt="" />
         </div>
         <div className='w-[150px] lg:w-[300px] xl:w-[200px] absolute top-150 lg:top-280 xl:top-150 right-0 lg:right-10 flex justify-center items-center '>
-          <img src={next} alt="" />
+          <img src={next} alt="" className='cursor-pointer hover:opacity-80' onClick={handleNext} />
         </div>
       </div>
       <main className='w-full h-full flex flex-col justify-center items-center pb-20 absolute'>
