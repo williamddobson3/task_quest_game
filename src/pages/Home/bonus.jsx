@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Main from './main';
 import get_free from '../../assets/get_free.png';
 import blank_card from '../../assets/blank_card.png';
@@ -6,6 +7,19 @@ import board_phone from '../../assets/board_phone.png';
 import complete from '../../assets/complete.png';
 
 export default function Bonus() {
+    const navigate = useNavigate();
+
+    // Randomly select between card-today and card-sun pages
+    const handleBlankCardClick = () => {
+        const cardPages = ['/card-today', '/card-sun'];
+        const randomIndex = Math.floor(Math.random() * cardPages.length);
+        navigate(cardPages[randomIndex]);
+    };
+
+    const handleCompleteClick = () => {
+        navigate('/home');
+    };
+
     return (
         <div className='w-full h-screen relative'>
             <div className='w-full h-full absolute top-0 left-0 opacity-50'>
@@ -17,7 +31,7 @@ export default function Bonus() {
                         <img src={get_free} alt="get_free" className='w-full'/>
                     </div>
                     <div className='w-[80px] lg:w-[200px] xl:w-[100px] h-auto flex justify-start items-center z-200 absolute left-25 lg:left-80 xl:left-130 xl:top-30'>
-                        <img src={blank_card} alt="" />
+                        <img src={blank_card} alt="" className='cursor-pointer hover:opacity-80' onClick={handleBlankCardClick} />
                     </div>
                 </div>
                 <div className='w-full h-auto flex justify-center items-center relative'>
@@ -33,7 +47,7 @@ export default function Bonus() {
                     </div>
                 </div>
                 <div className='w-[180px] lg:w-[300px] h-auto flex justify-center items-center relative xl:absolute xl:bottom-30 xl:right-0 pt-30'>
-                    <img src={complete} alt="complete" />
+                    <img src={complete} alt="complete" className='cursor-pointer hover:opacity-80' onClick={handleCompleteClick} />
                 </div>
             </div>
 
