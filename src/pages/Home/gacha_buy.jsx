@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Main from './main';
 import ok from '../../assets/ok.png';
 import cancel from '../../assets/cancel.png';
@@ -6,6 +7,23 @@ import gacha_buy from '../../assets/gacha_buy.png';
 
 
 export default function GachaBuy() {
+    const navigate = useNavigate();
+
+    const handleOkClick = () => {
+        // Check if online or offline
+        const isOnline = navigator.onLine;
+        
+        if (isOnline) {
+            navigate('/gacha-success');
+        } else {
+            navigate('/gacha-fail');
+        }
+    };
+
+    const handleCancelClick = () => {
+        navigate('/home');
+    };
+
     return (
         <div className='w-full h-screen relative'>
             <div className='w-full h-full absolute top-0 left-0 opacity-50 '>
@@ -17,8 +35,8 @@ export default function GachaBuy() {
                         <img src={gacha_buy} alt="" className='w-full'/>
                     </div>
                     <div className='w-[80px] lg:w-[200px] h-[100px] flex justify-center items-center absolute top-15 lg:top-40 xl:top-30 left-40 lg:left-110 xl:left-140 gap-3'>
-                        <img src={ok} alt="" className='w-full' />
-                        <img src={cancel} alt="" className='w-full' />
+                        <img src={ok} alt="" className='w-full cursor-pointer hover:opacity-80' onClick={handleOkClick} />
+                        <img src={cancel} alt="" className='w-full cursor-pointer hover:opacity-80' onClick={handleCancelClick} />
                     </div>
                 </div>
             </div>

@@ -41,7 +41,7 @@ export default function Main() {
                     </div>
                     <div className=' h-full flex justify-center items-center gap-3'>
                         <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
-                            <img src={one} alt="one" className='w-full one' />
+                            <img src={one} alt="one" className='w-full one cursor-pointer hover:opacity-80' onClick={() => navigate('/gacha-buy')} />
                         </div>
                         <div className='max-w-10 lg:max-w-16 xl:max-w-12 w-full h-auto'>
                             <img src={alarm} alt="alarm" className='w-full' />
