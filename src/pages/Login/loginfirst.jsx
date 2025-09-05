@@ -1,11 +1,16 @@
 import React from 'react';
 import login_background_iphone from '../../assets/background_iphone.png';
+import { useNavigate } from 'react-router-dom';
 import task_quest from '../../assets/task_quest.png';
 import hero_man from '../../assets/hero_man.png';
 import hero_woman from '../../assets/hero_woman.png';
 import start_guest from '../../assets/start_guest.png';
 
 export default function LoginFirst() {
+    const navigate = useNavigate();
+    const handleStartGuest = () => {
+        navigate('/login');
+    }
     return (
         <div
             className="w-full h-screen bg-cover bg-center bg-no-repeat"
@@ -27,7 +32,7 @@ export default function LoginFirst() {
                                 <img src={hero_woman} alt="hero_woman" className='w-1/2 max-w-600 h-auto object-contain ' />
                             </div>
                             <div className='flex flex-col gap-3 justify-start items-center w-full lg:w-2/5 pt-10'>
-                                <img src={start_guest} alt="start_guest" className='w-3/4 max-w-80' />
+                                <img src={start_guest} alt="start_guest" className='w-3/4 max-w-80 start_guest' onClick={handleStartGuest} />
                                 <div className='flex flex-col gap-8 w-full text-center text-[clamp(16px,2.5vw,30px)] lg:text-2xl font-bold'>
                                     <p>ゲストプレイでは <br /> データは端末に保存されます</p>
                                     <p>Discord連携でクランチャット <br />などの機能が使えます</p>
