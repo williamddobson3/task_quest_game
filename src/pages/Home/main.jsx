@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import login_background_iphone from '../../assets/background_iphone.png';
 import imgear from '../../assets/imgear.png';
 import one from '../../assets/one.png';
@@ -14,6 +15,12 @@ import battle from '../../assets/battle.png';
 import clan from '../../assets/clan.png';
 
 export default function Main() {
+    const navigate = useNavigate();
+
+    const handleGearClick = () => {
+        navigate('/setting');
+    };
+
     return (
         <div
             className="w-full h-screen lg:bg-[url('/src/assets/background_mac.png')] bg-cover bg-center"
@@ -29,7 +36,7 @@ export default function Main() {
                             <p className='text-sm lg:text-4xl xl:text-3xl font-bold text-[#dbab1e] [-webkit-text-stroke:1px_#a17b0b]'>ID: 123456789</p>
                         </div>
                         <div className='max-w-8 lg:max-w-20 xl:max-w-16 w-full h-auto'>
-                            <img src={imgear} alt="imgear" />
+                            <img src={imgear} alt="imgear" className='cursor-pointer hover:opacity-80' onClick={handleGearClick} />
                         </div>
                     </div>
                     <div className=' h-full flex justify-center items-center gap-3'>

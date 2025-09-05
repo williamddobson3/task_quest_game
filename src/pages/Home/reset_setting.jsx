@@ -2,6 +2,7 @@ import React from 'react';
 import Main from './main';
 import ok from '../../assets/ok.png';
 import reset_set_panel from '../../assets/reset_set_panel.png';
+import cancel from '../../assets/cancel.png';
 
 
 export default function ResetSetting() {
@@ -19,7 +20,8 @@ export default function ResetSetting() {
                         <img src={reset_set_panel} alt="" className='w-full' />
                     </div>
                     <div className='w-[80px] lg:w-[200px] h-[100px] flex justify-center items-center absolute top-35 lg:top-100 xl:top-70 left-40 lg:left-105 xl:left-135 gap-3'>
-                        <img src={ok} alt="" className='w-full' />
+                        <img src={ok} alt="" className='w-full cursor-pointer hover:opacity-80' />
+                        <img src={cancel} alt="" className='w-full cursor-pointer hover:opacity-80' />
                     </div>
                 </div>
             </div>
