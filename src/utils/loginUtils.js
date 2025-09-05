@@ -64,3 +64,14 @@ export const getPostTutorialRedirect = () => {
     return '/bonus';
   }
 };
+
+/**
+ * Randomly decide whether to go to home or discord-not page
+ * @returns {string} path to redirect to
+ */
+export const getRandomHomeRedirect = () => {
+  // 50% chance to show discord-not page before going home
+  const showDiscord = Math.random() < 0.5;
+  
+  return showDiscord ? '/discord-not' : '/home';
+};

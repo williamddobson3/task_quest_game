@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getRandomHomeRedirect } from '../../utils/loginUtils';
 import Main from './main';
 import get_free from '../../assets/get_free.png';
 import blank_card from '../../assets/blank_card.png';
@@ -21,7 +22,8 @@ export default function Bonus() {
     };
 
     const handleCompleteClick = () => {
-        navigate('/home');
+        const redirectPath = getRandomHomeRedirect();
+        navigate(redirectPath);
     };
 
     return (
