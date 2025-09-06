@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import login_background_iphone from '../../assets/background_iphone.png';
 import imgear from '../../assets/imgear.png';
@@ -16,9 +16,32 @@ import clan from '../../assets/clan.png';
 
 export default function Main() {
     const navigate = useNavigate();
+    const [taskA, setTaskA] = useState(null);
+    const [taskB, setTaskB] = useState(null);
+    const [taskC, setTaskC] = useState(null);
+
+    useEffect(() => {
+        // Load task information from localStorage
+        const savedTaskA = localStorage.getItem('taskA');
+        const savedTaskB = localStorage.getItem('taskB');
+        const savedTaskC = localStorage.getItem('taskC');
+        
+        if (savedTaskA) setTaskA(JSON.parse(savedTaskA));
+        if (savedTaskB) setTaskB(JSON.parse(savedTaskB));
+        if (savedTaskC) setTaskC(JSON.parse(savedTaskC));
+    }, []);
 
     const handleGearClick = () => {
         navigate('/setting');
+    };
+
+    const handleTaskClick = (taskType) => {
+        const taskData = localStorage.getItem(taskType);
+        if (taskData) {
+            navigate(`/task-modify?task=${taskType}`);
+        } else {
+            navigate(`/task-input?task=${taskType}`);
+        }
     };
 
     return (
@@ -51,32 +74,32 @@ export default function Main() {
                         </div>
                     </div>
                 </header>
-                <main className='w-full flex flex-col justify-start items-center'>
-                    <div className='w-full flex flex-col justify-start items-start pl-12 lg:pl-70 xl:pl-[600px] xl:pt-0'>
+                <main className='w-full flex flex-col justify-start items-center '>
+                    <div className='w-full flex flex-col justify-start items-start pl-12 lg:pl-70 xl:pl-[600px] xl:pt-0  z-[10000]'>
                         <div className='text-4xl lg:text-7xl xl:text-5xl'>
                             <p>今日のタスク</p>
                         </div>
                         <div className='flex justify-center items-center gap-3 relative'>
-                            <div className='w-[330px] lg:w-[750px] xl:w-[500px] h-auto'>
+                            <div className='w-[330px] lg:w-[750px] xl:w-[500px] h-auto relative'>
                                 <img src={task_not} alt="task_not" className='w-full h-auto'/>
-                            </div>
-                            <div className='flex flex-col justify-start items-center gap-3 lg:gap-8 absolute top-0 left-1/2 -translate-x-1/2 pt-10 lg:pt-20 xl:pt-10'>
-                                <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl'>
-                                    <p className='text-nowrap'>タスクA</p>
-                                    <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full'>
-                                        <img src={gear} alt="gear" />
+                                <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center gap-3 lg:gap-8 pt-10 lg:pt-20 xl:pt-10'>
+                                    <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-10 lg:top-20 xl:top-10 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
+                                        <p className='truncate flex-1'>{taskA ? taskA.text : 'タスクA'}</p>
+                                        <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
+                                            <img src={gear} alt="gear" className='taskA cursor-pointer hover:opacity-80' onClick={() => handleTaskClick('taskA')} />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl'>
-                                    <p className='text-nowrap'>タスクB</p>
-                                    <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full'>
-                                        <img src={gear} alt="gear" />
+                                    <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-20 lg:top-40 xl:top-20 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
+                                        <p className='truncate flex-1'>{taskB ? taskB.text : 'タスクB'}</p>
+                                        <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
+                                            <img src={gear} alt="gear" className='taskB cursor-pointer hover:opacity-80' onClick={() => handleTaskClick('taskB')} />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl'>
-                                    <p className='text-nowrap'>タスクC</p>
-                                    <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full'>
-                                        <img src={gear} alt="gear" />
+                                    <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-30 lg:top-60 xl:top-30 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
+                                        <p className='truncate flex-1'>{taskC ? taskC.text : 'タスクC'}</p>
+                                        <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
+                                            <img src={gear} alt="gear" className='taskC cursor-pointer hover:opacity-80' onClick={() => handleTaskClick('taskC')} />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
