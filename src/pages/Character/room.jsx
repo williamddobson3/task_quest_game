@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import character_room_tablet from '../../assets/character_room_tablet.png';
 import imgear from '../../assets/imgear.png';
@@ -23,13 +23,101 @@ import possession from '../../assets/possession.png';
 import filter from '../../assets/filter.png';
 import empty_item from '../../assets/empty_item.png';
 
+// Card images
+import first_job from '../../assets/first_job.png';
+import second_job from '../../assets/second_job.png';
+import third_job from '../../assets/third_job.png';
+import fourth_job from '../../assets/fourth_job.png';
+import fifth_job from '../../assets/fifth_job.png';
+import card_two from '../../assets/card_two.png';
+import card_free from '../../assets/card_free.png';
+
 
 export default function Room() {
     const navigate = useNavigate();
+    const [collectedCards, setCollectedCards] = useState([]);
+    const [pendingCard, setPendingCard] = useState(null);
+
+    useEffect(() => {
+        // Load collected cards from localStorage
+        const savedCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
+        console.log('Collected cards:', savedCards);
+        
+        // If no cards exist, add some test cards for debugging
+        if (savedCards.length === 0) {
+            const testCards = [
+                {
+                    id: 'first_job',
+                    name: '鍛錬者',
+                    type: 'job',
+                    rarity: 'N',
+                    image: 'first_job',
+                    description: '力と体力で突き進む肉体派。'
+                },
+                {
+                    id: 'second_job',
+                    name: '学者',
+                    type: 'job',
+                    rarity: 'N',
+                    image: 'second_job',
+                    description: '知恵と持続力で学問を極める。'
+                }
+            ];
+            localStorage.setItem('playerCards', JSON.stringify(testCards));
+            setCollectedCards(testCards);
+            console.log('Added test cards:', testCards);
+        } else {
+            setCollectedCards(savedCards);
+        }
+        
+        // Load pending card from localStorage
+        const today = new Date().toDateString();
+        const pendingCardData = localStorage.getItem('pendingCard');
+        const pendingCardDate = localStorage.getItem('pendingCardDate');
+        
+        console.log('Pending card data:', pendingCardData);
+        console.log('Pending card date:', pendingCardDate);
+        console.log('Today:', today);
+        
+        if (pendingCardData && pendingCardDate === today) {
+            const parsedPendingCard = JSON.parse(pendingCardData);
+            console.log('Parsed pending card:', parsedPendingCard);
+            setPendingCard(parsedPendingCard);
+        }
+    }, []);
 
     const handleGearClick = () => {
         navigate('/setting');
     };
+
+    // Function to get the correct card image based on card data
+    const getCardImage = (card) => {
+        if (!card) {
+            console.log('getCardImage: No card provided');
+            return null;
+        }
+        
+        console.log('getCardImage: Card data:', card);
+        console.log('getCardImage: Card image key:', card.image);
+        
+        const imageMap = {
+            'first_job': first_job,
+            'second_job': second_job,
+            'third_job': third_job,
+            'fourth_job': fourth_job,
+            'fifth_job': fifth_job,
+            'card_two': card_two,
+            'card_free': card_free
+        };
+        
+        const selectedImage = imageMap[card.image] || card_free;
+        console.log('getCardImage: Selected image:', selectedImage);
+        
+        return selectedImage;
+    };
+
+    // Get the first 5 cards for display
+    const displayCards = collectedCards.slice(0, 5);
 
     return (
         <div
@@ -72,22 +160,67 @@ export default function Room() {
                         <div className='w-[250px] lg:w-[600px] xl:w-[500px] h-auto absolute lg:top-[-380px] xl:top-[-200px] left-0 xl:left-20'>
                             <img src={hero_man} alt="hero_man" className='w-full h-auto'/>
                         </div>
-                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto xl:mb-50'>
-                            <img src={main_item} alt="main_item" className='w-full h-auto '/>
+                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto xl:mb-50 relative'>
+                            <img src={main_item} alt="main_item" className='w-full h-auto'/>
+                            {displayCards[0] && (
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    <img 
+                                        src={getCardImage(displayCards[0])} 
+                                        alt={displayCards[0].name}
+                                        className='w-3/4 h-3/4 object-contain'
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className='w-full h-[200px] lg:h-[400px] xl:h-[200px] flex justify-center items-center xl:justify-end xl:pr-10 xl:pb-60 gap-3 mt-[75px] lg:mt-[25px] xl:mt-0'>
-                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto'>
+                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
                             <img src={first_item} alt="first_item" className='w-full h-auto'/>
+                            {displayCards[1] && (
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    <img 
+                                        src={getCardImage(displayCards[1])} 
+                                        alt={displayCards[1].name}
+                                        className='w-3/4 h-3/4 object-contain'
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto'>
+                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
                             <img src={second_item} alt="second_item" className='w-full h-auto'/>
+                            {displayCards[2] && (
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    <img 
+                                        src={getCardImage(displayCards[2])} 
+                                        alt={displayCards[2].name}
+                                        className='w-3/4 h-3/4 object-contain'
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto'>
+                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
                             <img src={third_item} alt="third_item" className='w-full h-auto'/>
+                            {displayCards[3] && (
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    <img 
+                                        src={getCardImage(displayCards[3])} 
+                                        alt={displayCards[3].name}
+                                        className='w-3/4 h-3/4 object-contain'
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto'>
+                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
                             <img src={fourth_item} alt="fourth_item" className='w-full h-auto'/>
+                            {displayCards[4] && (
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    <img 
+                                        src={getCardImage(displayCards[4])} 
+                                        alt={displayCards[4].name}
+                                        className='w-3/4 h-3/4 object-contain'
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className='w-full lg:w-[700px] xl:w-full h-auto  flex justify-center items-center gap-3 mt-[75px] xl:mt-0 '>
@@ -96,18 +229,38 @@ export default function Room() {
                         </div>
                         <div className='grid grid-cols-5 gap-3 xl:gap-1 z-10 absolute xl:h-[400px] xl:pr-[500px] xl:pt-[60px]'>
                             {
-                                Array.from({ length: 15 }, (_, index) => (
-                                    <div key={index} className='w-[50px] lg:w-[100px] xl:w-[70px] h-auto'>
-                                        <img src={each_item} alt="each_item" className='w-full h-auto'/>
-                                    </div>
-                                ))
-                            }
-                            {
-                                Array.from({ length: 5 }, (_, index) => (
-                                    <div key={index} className='w-[50px] lg:w-[100px] xl:w-[70px] h-auto xl:mt-[-112px]'>
-                                        <img src={empty_item} alt="empty_item" className='w-full h-auto'/>
-                                    </div>
-                                ))
+                                Array.from({ length: 20 }, (_, index) => {
+                                    let card = null;
+                                    
+                                    // First slot shows pending card if available
+                                    if (index === 0 && pendingCard) {
+                                        card = pendingCard;
+                                        console.log('Slot 0 - Pending card:', card);
+                                    } else {
+                                        // Other slots show collected cards (offset by 1 if pending card exists)
+                                        const cardIndex = pendingCard ? index - 1 : index;
+                                        card = collectedCards[cardIndex];
+                                        if (card) {
+                                            console.log(`Slot ${index} - Collected card:`, card);
+                                        }
+                                    }
+                                    
+                                    return (
+                                        <div key={index} className='w-[50px] lg:w-[100px] xl:w-[70px] h-auto relative'>
+                                            {card ? (
+                                                <div className='w-full h-full flex items-center justify-center'>
+                                                    <img 
+                                                        src={getCardImage(card)} 
+                                                        alt={card.name}
+                                                        className='w-full h-full object-contain'
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <img src={empty_item} alt="empty_item" className='w-full h-auto'/>
+                                            )}
+                                        </div>
+                                    );
+                                })
                             }
                         </div>
                     </div>

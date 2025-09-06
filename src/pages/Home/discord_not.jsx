@@ -28,7 +28,7 @@ export default function DiscordNot() {
                 <div className='w-[20px] lg:w-[30px] xl:w-[20px] h-[20px] lg:h-[30px] xl:h-[20px] flex justify-center items-center absolute top-5 lg:top-10 xl:top-13 left-70 lg:left-200 xl:left-278'>
                     <img src={red} alt="" className='w-full h-full' />
                 </div>
-                <div className='w-full h-auto flex justify-start items-center relative pl-0 lg:pl-50 xl:pl-90 lg:pt-15 xl:pt-40'>
+                <div className='w-full h-auto flex justify-start items-center relative pl-0 lg:pl-50 xl:pl-90 lg:pt-15 xl:pt-40 z-[10000000]'>
                     <div className='w-[300px] lg:w-[600px] xl:w-[1000px] h-[100px] flex justify-center items-center'>
                         <img src={alarm_not} alt="" />
                     </div>

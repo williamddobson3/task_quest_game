@@ -53,7 +53,7 @@ export default function Main() {
             }}
         >
             <div className='w-full h-full flex flex-col justify-start items-center pt-20 lg:pt-32 xl:pt-16'>
-                <header className='w-full h-1/10 flex justify-between items-center absolute top-0 xl:top-10 xl:px-5'>
+                <header className='w-full h-1/10 flex justify-between items-center absolute top-0 xl:top-10 xl:px-5 z-[1000000]'>
                     <div className=' h-full flex justify-start items-center'>
                         <div className='flex flex-col justify-center items-center text-center'>
                             <p className='text-2xl lg:text-7xl xl:text-6xl font-bold text-[#dbab1e] [-webkit-text-stroke:2px_#a17b0b]'>Player</p>
