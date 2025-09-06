@@ -1,10 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import character_room_tablet from '../../assets/character_room_tablet.png';
 import imgear from '../../assets/imgear.png';
 import one from '../../assets/one.png';
 import alarm from '../../assets/alarm.png';
 import gacha from '../../assets/gacha.png';
-import hero_woman from '../../assets/hero_woman.png';
+import hero_man from '../../assets/hero_man.png';
 import home from '../../assets/home.png';
 import character from '../../assets/character.png';
 import ticket from '../../assets/ticket.png';
@@ -24,6 +25,12 @@ import empty_item from '../../assets/empty_item.png';
 
 
 export default function Room() {
+    const navigate = useNavigate();
+
+    const handleGearClick = () => {
+        navigate('/setting');
+    };
+
     return (
         <div
             className="w-full h-[200vh] lg:bg-[url('/src/assets/character_room_mac.png')] bg-cover bg-center"
@@ -39,12 +46,12 @@ export default function Room() {
                             <p className='text-sm lg:text-4xl xl:text-3xl font-bold text-[#dbab1e] [-webkit-text-stroke:1px_#a17b0b]'>ID: 123456789</p>
                         </div>
                         <div className='max-w-8 lg:max-w-20 xl:max-w-16 w-full h-auto'>
-                            <img src={imgear} alt="imgear" />
+                            <img src={imgear} alt="imgear" className='cursor-pointer hover:opacity-80 imgear' onClick={handleGearClick} />
                         </div>
                     </div>
                     <div className=' h-full flex justify-center items-center gap-3'>
                         <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
-                            <img src={one} alt="one" className='w-full' />
+                            <img src={one} alt="one" className='w-full one cursor-pointer hover:opacity-80' onClick={() => navigate('/gacha-buy')} />
                         </div>
                         <div className='max-w-10 lg:max-w-16 xl:max-w-12 w-full h-auto'>
                             <img src={alarm} alt="alarm" className='w-full' />
@@ -63,7 +70,7 @@ export default function Room() {
                     </div>
                     <div className='w-full h-[250px] flex justify-end items-end xl:pl-[200px] relative pr-5 lg:pr-50 lg:mt-30 xl:mt-0 xl:pr-120'>
                         <div className='w-[250px] lg:w-[600px] xl:w-[500px] h-auto absolute lg:top-[-380px] xl:top-[-200px] left-0 xl:left-20'>
-                            <img src={hero_woman} alt="hero_man" className='w-full h-auto'/>
+                            <img src={hero_man} alt="hero_man" className='w-full h-auto'/>
                         </div>
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto xl:mb-50'>
                             <img src={main_item} alt="main_item" className='w-full h-auto '/>
