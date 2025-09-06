@@ -58,6 +58,18 @@ export default function TaskModify() {
         navigate('/home');
     };
 
+    const handleArchiveClick = () => {
+        if (taskData) {
+            const archivedTaskData = {
+                ...taskData,
+                archived: true,
+                archivedAt: new Date().toISOString()
+            };
+            localStorage.setItem(taskType, JSON.stringify(archivedTaskData));
+            navigate('/home');
+        }
+    };
+
     if (!taskData) {
         return <div>Loading...</div>;
     }
@@ -106,14 +118,14 @@ export default function TaskModify() {
                     </div>
                     <div className='flex flex-col justify-center items-center w-1/2 xl:absolute bottom-0 right-[-400px] gap-2 xl:gap-4 '>
                         <div className='justify-center items-center gap-2 hidden xl:flex'>
-                            <img src={archieve} alt="" className='w-[150px] lg:w-[200px] h-auto' />
+                            <img src={archieve} alt="" className='w-[150px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' onClick={handleArchiveClick} />
                         </div>
                         <div className='flex justify-center items-center gap-2 xl:flex-col xl:gap-4'>
                             <img src={complete} alt="" className='w-[150px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' onClick={handleCompleteClick} />
                             <img src={delete_task} alt="" className='w-[150px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' onClick={handleDeleteClick} />
                         </div>
                         <div className='flex justify-center items-center gap-2 xl:hidden'>
-                            <img src={archieve} alt="" className='w-[150px] lg:w-[200px] h-auto' />
+                            <img src={archieve} alt="" className='w-[150px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' onClick={handleArchiveClick} />
                         </div>
 
                     </div>

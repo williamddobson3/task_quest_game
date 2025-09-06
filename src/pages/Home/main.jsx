@@ -7,6 +7,7 @@ import alarm from '../../assets/alarm.png';
 import gacha from '../../assets/gacha.png';
 import task_not from '../../assets/task_not.png';
 import gear from '../../assets/gear.png';
+import completed from '../../assets/completed.png';
 import hero_man from '../../assets/hero_man.png';
 import home from '../../assets/home.png';
 import character from '../../assets/character.png';
@@ -82,25 +83,40 @@ export default function Main() {
                         <div className='flex justify-center items-center gap-3 relative'>
                             <div className='w-[330px] lg:w-[750px] xl:w-[500px] h-auto relative'>
                                 <img src={task_not} alt="task_not" className='w-full h-auto'/>
-                                <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center gap-3 lg:gap-8 pt-10 lg:pt-20 xl:pt-10'>
-                                    <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-10 lg:top-20 xl:top-10 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
-                                        <p className='truncate flex-1'>{taskA ? taskA.text : 'タスクA'}</p>
-                                        <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
-                                            <img src={gear} alt="gear" className='taskA cursor-pointer hover:opacity-80' onClick={() => handleTaskClick('taskA')} />
-                                        </div>
-                                    </div>
-                                    <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-20 lg:top-40 xl:top-20 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
-                                        <p className='truncate flex-1'>{taskB ? taskB.text : 'タスクB'}</p>
-                                        <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
-                                            <img src={gear} alt="gear" className='taskB cursor-pointer hover:opacity-80' onClick={() => handleTaskClick('taskB')} />
-                                        </div>
-                                    </div>
-                                    <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-30 lg:top-60 xl:top-30 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
-                                        <p className='truncate flex-1'>{taskC ? taskC.text : 'タスクC'}</p>
-                                        <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
-                                            <img src={gear} alt="gear" className='taskC cursor-pointer hover:opacity-80' onClick={() => handleTaskClick('taskC')} />
-                                        </div>
-                                    </div>
+                                <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center gap-3 lg:gap-8 pt-10 lg:pt-20 xl:pt-10'>
+                                     <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-10 lg:top-20 xl:top-10 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
+                                         <p className='truncate flex-1'>{taskA ? taskA.text : 'タスクA'}</p>
+                                         <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
+                                             <img 
+                                                 src={taskA && taskA.archived ? completed : gear} 
+                                                 alt={taskA && taskA.archived ? "completed" : "gear"} 
+                                                 className='taskA cursor-pointer hover:opacity-80' 
+                                                 onClick={() => handleTaskClick('taskA')} 
+                                             />
+                                         </div>
+                                     </div>
+                                     <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-20 lg:top-40 xl:top-20 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
+                                         <p className='truncate flex-1'>{taskB ? taskB.text : 'タスクB'}</p>
+                                         <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
+                                             <img 
+                                                 src={taskB && taskB.archived ? completed : gear} 
+                                                 alt={taskB && taskB.archived ? "completed" : "gear"} 
+                                                 className='taskB cursor-pointer hover:opacity-80' 
+                                                 onClick={() => handleTaskClick('taskB')} 
+                                             />
+                                         </div>
+                                     </div>
+                                     <div className='flex justify-start items-center gap-8 text-3xl lg:text-7xl xl:text-5xl absolute top-30 lg:top-60 xl:top-30 left-1/2 transform -translate-x-1/2 w-[280px] lg:w-[650px] xl:w-[450px]'>
+                                         <p className='truncate flex-1'>{taskC ? taskC.text : 'タスクC'}</p>
+                                         <div className='w-[30px] lg:w-[45px] h-auto flex justify-center items-center h-full flex-shrink-0'>
+                                             <img 
+                                                 src={taskC && taskC.archived ? completed : gear} 
+                                                 alt={taskC && taskC.archived ? "completed" : "gear"} 
+                                                 className='taskC cursor-pointer hover:opacity-80' 
+                                                 onClick={() => handleTaskClick('taskC')} 
+                                             />
+                                         </div>
+                                     </div>
                                 </div>
                             </div>
                         </div>
