@@ -37,14 +37,19 @@ export default function Room() {
     const navigate = useNavigate();
     const [collectedCards, setCollectedCards] = useState([]);
     const [pendingCard, setPendingCard] = useState(null);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         // Load collected cards from localStorage
         const savedCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
         console.log('Collected cards:', savedCards);
         
-        // If no cards exist, add some test cards for debugging
-        if (savedCards.length === 0) {
+        // Only add test cards if localStorage is completely empty (first time user)
+        const hasAnyData = localStorage.getItem('playerCards') || 
+                          localStorage.getItem('pendingCard') || 
+                          localStorage.getItem('userName');
+        
+        if (savedCards.length === 0 && !hasAnyData) {
             const testCards = [
                 {
                     id: 'first_job',
@@ -65,9 +70,10 @@ export default function Room() {
             ];
             localStorage.setItem('playerCards', JSON.stringify(testCards));
             setCollectedCards(testCards);
-            console.log('Added test cards:', testCards);
+            console.log('Added test cards for new user:', testCards);
         } else {
             setCollectedCards(savedCards);
+            console.log('Loaded existing cards:', savedCards);
         }
         
         // Load pending card from localStorage
@@ -86,8 +92,54 @@ export default function Room() {
         }
     }, []);
 
+    // Add focus event listener to refresh data when returning to this page
+    useEffect(() => {
+        const handleFocus = () => {
+            console.log('Character room page focused - refreshing data');
+            // Reload collected cards (don't add test cards on refresh)
+            const savedCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
+            setCollectedCards(savedCards);
+            console.log('Refreshed cards from localStorage:', savedCards);
+            
+            // Reload pending card
+            const today = new Date().toDateString();
+            const pendingCardData = localStorage.getItem('pendingCard');
+            const pendingCardDate = localStorage.getItem('pendingCardDate');
+            
+            if (pendingCardData && pendingCardDate === today) {
+                const parsedPendingCard = JSON.parse(pendingCardData);
+                setPendingCard(parsedPendingCard);
+                console.log('Refreshed pending card:', parsedPendingCard);
+            } else {
+                setPendingCard(null);
+                console.log('No pending card found');
+            }
+        };
+
+        window.addEventListener('focus', handleFocus);
+        return () => window.removeEventListener('focus', handleFocus);
+    }, []);
+
+    // Track window width changes
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const handleGearClick = () => {
         navigate('/setting');
+    };
+
+    const handleCardClick = (card) => {
+        if (card) {
+            // Store the clicked card data in localStorage for the room-ticket page to access
+            localStorage.setItem('selectedCard', JSON.stringify(card));
+            navigate('/room-ticket');
+        }
     };
 
     // Function to get the correct card image based on card data
@@ -163,7 +215,10 @@ export default function Room() {
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto xl:mb-50 relative'>
                             <img src={main_item} alt="main_item" className='w-full h-auto'/>
                             {displayCards[0] && (
-                                <div className='absolute inset-0 flex items-center justify-center'>
+                                <div 
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    onClick={() => handleCardClick(displayCards[0])}
+                                >
                                     <img 
                                         src={getCardImage(displayCards[0])} 
                                         alt={displayCards[0].name}
@@ -177,7 +232,10 @@ export default function Room() {
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
                             <img src={first_item} alt="first_item" className='w-full h-auto'/>
                             {displayCards[1] && (
-                                <div className='absolute inset-0 flex items-center justify-center'>
+                                <div 
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    onClick={() => handleCardClick(displayCards[1])}
+                                >
                                     <img 
                                         src={getCardImage(displayCards[1])} 
                                         alt={displayCards[1].name}
@@ -189,7 +247,10 @@ export default function Room() {
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
                             <img src={second_item} alt="second_item" className='w-full h-auto'/>
                             {displayCards[2] && (
-                                <div className='absolute inset-0 flex items-center justify-center'>
+                                <div 
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    onClick={() => handleCardClick(displayCards[2])}
+                                >
                                     <img 
                                         src={getCardImage(displayCards[2])} 
                                         alt={displayCards[2].name}
@@ -201,7 +262,10 @@ export default function Room() {
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
                             <img src={third_item} alt="third_item" className='w-full h-auto'/>
                             {displayCards[3] && (
-                                <div className='absolute inset-0 flex items-center justify-center'>
+                                <div 
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    onClick={() => handleCardClick(displayCards[3])}
+                                >
                                     <img 
                                         src={getCardImage(displayCards[3])} 
                                         alt={displayCards[3].name}
@@ -213,7 +277,10 @@ export default function Room() {
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
                             <img src={fourth_item} alt="fourth_item" className='w-full h-auto'/>
                             {displayCards[4] && (
-                                <div className='absolute inset-0 flex items-center justify-center'>
+                                <div 
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    onClick={() => handleCardClick(displayCards[4])}
+                                >
                                     <img 
                                         src={getCardImage(displayCards[4])} 
                                         alt={displayCards[4].name}
@@ -245,10 +312,21 @@ export default function Room() {
                                         }
                                     }
                                     
+                                    // Show only 3 rows (15 cards) when width is 1280px
+                                    const shouldShow = windowWidth === 1280 ? index < 15 : true;
+                                    
                                     return (
-                                        <div key={index} className='w-[50px] lg:w-[100px] xl:w-[70px] h-auto relative'>
+                                        <div 
+                                            key={index} 
+                                            className={`w-[50px] lg:w-[100px] xl:w-[70px] h-auto relative ${
+                                                !shouldShow ? 'hidden' : ''
+                                            }`}
+                                        >
                                             {card ? (
-                                                <div className='w-full h-full flex items-center justify-center'>
+                                                <div 
+                                                    className='w-full h-full flex items-center justify-center cursor-pointer hover:opacity-80'
+                                                    onClick={() => handleCardClick(card)}
+                                                >
                                                     <img 
                                                         src={getCardImage(card)} 
                                                         alt={card.name}
