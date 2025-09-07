@@ -68,7 +68,8 @@ export default function GachaRoom() {
             // Navigate to gacha-one page
             navigate('/gacha-one');
         } else {
-            alert('Not enough tickets! Complete tasks to earn more tickets.');
+            // Redirect to gacha-lack page if no tickets
+            navigate('/gacha-lack');
         }
     };
 
@@ -91,7 +92,8 @@ export default function GachaRoom() {
             // Navigate to gacha-ten page
             navigate('/gacha-ten');
         } else {
-            alert('Not enough tickets! You need 10 tickets for a ten-pull. Complete more tasks to earn tickets.');
+            // Redirect to gacha-lack page if insufficient tickets
+            navigate('/gacha-lack');
         }
     };
 
@@ -143,18 +145,18 @@ export default function GachaRoom() {
                         </p>
                     </div>
                     
-                    <div className='w-full flex flex-col justify-center items-center gap-10 h-full'>
+                    <div className='w-full flex flex-col justify-center items-center gap-10 h-full z-[1000000]'>
                         <img 
                             src={once_pull} 
                             alt="once_pull"  
                             className={`w-[200px] lg:w-[300px] xl:w-[200px] h-auto ${ticketCount >= 1 ? 'cursor-pointer' : ' cursor-not-allowed'}`}
-                            onClick={ticketCount >= 1 ? handleOncePullClick : undefined}
+                            onClick={handleOncePullClick}
                         />
                         <img 
                             src={ten_pull} 
                             alt="ten_pull" 
                             className={`w-[200px] lg:w-[300px] xl:w-[200px] h-auto ${ticketCount >= 10 ? 'cursor-pointer' : ' cursor-not-allowed'}`}
-                            onClick={ticketCount >= 10 ? handleTenPullClick : undefined}
+                            onClick={handleTenPullClick}
                         />
                     </div>
                 </main>

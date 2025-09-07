@@ -179,16 +179,24 @@ export default function Room() {
     };
 
     const handleOnePullClick = () => {
-        // Generate random card
-        const randomCard = getRandomCard();
+        // Check if player has at least 1 ticket
+        const currentTickets = parseInt(localStorage.getItem('gachaTickets') || '0');
         
-        // Store the drawn card in localStorage for gacha-one page to display
-        localStorage.setItem('drawnCard', JSON.stringify(randomCard));
-        
-        console.log('New card generated:', randomCard);
-        
-        // Navigate to gacha-one page to show the result
-        navigate('/gacha-one');
+        if (currentTickets >= 1) {
+            // Generate random card
+            const randomCard = getRandomCard();
+            
+            // Store the drawn card in localStorage for gacha-one page to display
+            localStorage.setItem('drawnCard', JSON.stringify(randomCard));
+            
+            console.log('New card generated:', randomCard);
+            
+            // Navigate to gacha-one page to show the result
+            navigate('/gacha-one');
+        } else {
+            // Redirect to gacha-lack page if no tickets
+            navigate('/gacha-lack');
+        }
     };
 
     const handleTenPullClick = () => {
@@ -210,7 +218,8 @@ export default function Room() {
             // Navigate to gacha-ten page to show the results
             navigate('/gacha-ten');
         } else {
-            alert('You need at least 10 tickets for a ten-pull! Complete more tasks to earn tickets.');
+            // Redirect to gacha-lack page if insufficient tickets
+            navigate('/gacha-lack');
         }
     };
 
@@ -286,14 +295,6 @@ export default function Room() {
                             <p>100</p>
                         </div>
                         {/* Ten Pull Button */}
-                        <div className='w-[150px] lg:w-[200px] xl:w-[150px] h-auto mt-4'>
-                            <img 
-                                src={ten_pull} 
-                                alt="ten_pull" 
-                                className='w-full h-auto cursor-pointer hover:opacity-80'
-                                onClick={handleTenPullClick}
-                            />
-                        </div>
                     </div>
                     <div className='w-full h-[250px] flex justify-end items-end xl:pl-[200px] relative pr-5 lg:pr-50 lg:mt-30 xl:mt-0 xl:pr-120'>
                         <div className='w-[250px] lg:w-[600px] xl:w-[500px] h-auto absolute lg:top-[-380px] xl:top-[-200px] left-0 xl:left-20'>
