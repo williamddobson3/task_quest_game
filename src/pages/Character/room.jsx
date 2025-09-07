@@ -22,6 +22,8 @@ import each_item from '../../assets/each_item.png';
 import possession from '../../assets/possession.png';
 import filter from '../../assets/filter.png';
 import empty_item from '../../assets/empty_item.png';
+import ten_pull from '../../assets/ten_pull.png';
+import { getRandomCard } from '../../utils/cardData';
 
 // Card images
 import first_job from '../../assets/first_job.png';
@@ -171,6 +173,47 @@ export default function Room() {
         navigate('/ticket-filter');
     };
 
+    const handleTicketClick = () => {
+        // Navigate to gacha-room page
+        navigate('/gacha-room');
+    };
+
+    const handleOnePullClick = () => {
+        // Generate random card
+        const randomCard = getRandomCard();
+        
+        // Store the drawn card in localStorage for gacha-one page to display
+        localStorage.setItem('drawnCard', JSON.stringify(randomCard));
+        
+        console.log('New card generated:', randomCard);
+        
+        // Navigate to gacha-one page to show the result
+        navigate('/gacha-one');
+    };
+
+    const handleTenPullClick = () => {
+        // Check if player has enough tickets (10 or more)
+        const currentTickets = parseInt(localStorage.getItem('gachaTickets') || '0');
+        
+        if (currentTickets >= 10) {
+            // Generate 10 random cards
+            const drawnCards = [];
+            for (let i = 0; i < 10; i++) {
+                drawnCards.push(getRandomCard());
+            }
+            
+            // Store the drawn cards in localStorage for gacha-ten page to display
+            localStorage.setItem('drawnCards', JSON.stringify(drawnCards));
+            
+            console.log('10 cards generated:', drawnCards);
+            
+            // Navigate to gacha-ten page to show the results
+            navigate('/gacha-ten');
+        } else {
+            alert('You need at least 10 tickets for a ten-pull! Complete more tasks to earn tickets.');
+        }
+    };
+
     // Function to get the correct card image based on card data
     const getCardImage = (card) => {
         if (!card) {
@@ -226,7 +269,7 @@ export default function Room() {
                     </div>
                     <div className=' h-full flex justify-center items-center gap-3'>
                         <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
-                            <img src={one} alt="one" className='w-full one cursor-pointer hover:opacity-80' onClick={() => navigate('/gacha-buy')} />
+                            <img src={one} alt="one" className='w-full one cursor-pointer hover:opacity-80' onClick={handleOnePullClick} />
                         </div>
                         <div className='max-w-10 lg:max-w-16 xl:max-w-12 w-full h-auto'>
                             <img src={alarm} alt="alarm" className='w-full' />
@@ -241,6 +284,15 @@ export default function Room() {
                         <div className='flex justify-center items-center gap-3 relative w-[230px] lg:w-[550px] xl:w-[300px] h-auto'>
                             <img src={score} alt="score" className='w-full h-auto'/>
                             <p>100</p>
+                        </div>
+                        {/* Ten Pull Button */}
+                        <div className='w-[150px] lg:w-[200px] xl:w-[150px] h-auto mt-4'>
+                            <img 
+                                src={ten_pull} 
+                                alt="ten_pull" 
+                                className='w-full h-auto cursor-pointer hover:opacity-80'
+                                onClick={handleTenPullClick}
+                            />
                         </div>
                     </div>
                     <div className='w-full h-[250px] flex justify-end items-end xl:pl-[200px] relative pr-5 lg:pr-50 lg:mt-30 xl:mt-0 xl:pr-120'>
@@ -383,14 +435,14 @@ export default function Room() {
                         </div>
                     </div>
                     <div className='w-full h-auto flex justify-center items-center gap-3 mt-[20px] xl:pr-[450px] xl:gap-15'>
-                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto'>
+                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto  z-[100000]'>
                             <img src={possession} alt="possession" className='w-full h-auto'/>
                         </div>
-                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto'>
+                        <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto  z-[100000] '>
                             <img 
                                 src={filter} 
                                 alt="filter" 
-                                className='w-full h-auto cursor-pointer hover:opacity-80'
+                                className='w-full h-auto cursor-pointer '
                                 onClick={handleFilterClick}
                             />
                         </div>
@@ -404,7 +456,12 @@ export default function Room() {
                         <img src={character} alt="character" className='w-full h-auto'/>
                     </div>
                     <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
-                        <img src={ticket} alt="ticket" className='w-full h-auto'/>
+                        <img 
+                            src={ticket} 
+                            alt="ticket" 
+                            className='w-full h-auto cursor-pointer hover:opacity-80'
+                            onClick={handleTicketClick}
+                        />
                     </div>
                     <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
                         <img src={battle} alt="battle" className='w-full h-auto'/>

@@ -20,6 +20,7 @@ export default function Main() {
     const [taskA, setTaskA] = useState(null);
     const [taskB, setTaskB] = useState(null);
     const [taskC, setTaskC] = useState(null);
+    const [ticketCount, setTicketCount] = useState(0);
 
     useEffect(() => {
         // Load task information from localStorage
@@ -30,6 +31,10 @@ export default function Main() {
         if (savedTaskA) setTaskA(JSON.parse(savedTaskA));
         if (savedTaskB) setTaskB(JSON.parse(savedTaskB));
         if (savedTaskC) setTaskC(JSON.parse(savedTaskC));
+        
+        // Load ticket count from localStorage
+        const savedTickets = localStorage.getItem('gachaTickets');
+        setTicketCount(savedTickets ? parseInt(savedTickets) : 0);
     }, []);
 
     const handleGearClick = () => {
@@ -43,6 +48,25 @@ export default function Main() {
         } else {
             navigate(`/task-input?task=${taskType}`);
         }
+    };
+
+    const handleTicketClick = () => {
+        navigate('/gacha-room');
+    };
+
+    const handleOneClick = () => {
+        // Give player 1 ticket
+        const currentTickets = parseInt(localStorage.getItem('gachaTickets') || '0');
+        const newTicketCount = currentTickets + 1;
+        localStorage.setItem('gachaTickets', newTicketCount.toString());
+        
+        // Update state
+        setTicketCount(newTicketCount);
+        
+        // Show success message
+        alert('You received 1 gacha ticket!');
+        
+        console.log('Tickets updated:', newTicketCount);
     };
 
     return (
@@ -65,13 +89,19 @@ export default function Main() {
                     </div>
                     <div className=' h-full flex justify-center items-center gap-3'>
                         <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
-                            <img src={one} alt="one" className='w-full one cursor-pointer hover:opacity-80' onClick={() => navigate('/gacha-buy')} />
+                            <img src={one} alt="one" className='w-full one cursor-pointer hover:opacity-80' onClick={handleOneClick} />
                         </div>
                         <div className='max-w-10 lg:max-w-16 xl:max-w-12 w-full h-auto'>
                             <img src={alarm} alt="alarm" className='w-full' />
                         </div>
                         <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
                             <img src={gacha} alt="gacha" className='w-full'/>
+                        </div>
+                        {/* Ticket Counter Display */}
+                        <div className='bg-black bg-opacity-50 text-white px-3 py-1 rounded-lg'>
+                            <p className='text-sm lg:text-lg xl:text-base font-bold'>
+                                Tickets: {ticketCount}
+                            </p>
                         </div>
                     </div>
                 </header>
@@ -135,7 +165,12 @@ export default function Main() {
                          <img src={character} alt="character" className='w-full h-auto cursor-pointer hover:opacity-80' onClick={() => navigate('/character-room')}/>
                      </div>
                     <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
-                        <img src={ticket} alt="ticket" className='w-full h-auto'/>
+                        <img 
+                            src={ticket} 
+                            alt="ticket" 
+                            className='w-full h-auto cursor-pointer hover:opacity-80'
+                            onClick={handleTicketClick}
+                        />
                     </div>
                     <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
                         <img src={battle} alt="battle" className='w-full h-auto'/>
