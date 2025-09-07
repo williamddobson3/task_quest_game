@@ -166,6 +166,11 @@ export default function Room() {
         }
     };
 
+    const handleFilterClick = () => {
+        // Navigate to ticket-filter page
+        navigate('/ticket-filter');
+    };
+
     // Function to get the correct card image based on card data
     const getCardImage = (card) => {
         if (!card) {
@@ -382,7 +387,12 @@ export default function Room() {
                             <img src={possession} alt="possession" className='w-full h-auto'/>
                         </div>
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto'>
-                            <img src={filter} alt="filter" className='w-full h-auto'/>
+                            <img 
+                                src={filter} 
+                                alt="filter" 
+                                className='w-full h-auto cursor-pointer hover:opacity-80'
+                                onClick={handleFilterClick}
+                            />
                         </div>
                     </div>
                 </main>
