@@ -59,8 +59,42 @@ export default function Ticket() {
   };
 
   const handleUseClick = () => {
-    // TODO: Implement card usage logic
-    console.log('Use card:', selectedCard);
+    if (!selectedCard) return;
+    
+    console.log('Using card:', selectedCard);
+    
+    // Get current equipped cards from localStorage
+    const equippedCards = JSON.parse(localStorage.getItem('equippedCards') || '[]');
+    console.log('Current equipped cards:', equippedCards);
+    
+    // Check if card is already equipped
+    const isAlreadyEquipped = equippedCards.some(card => card.id === selectedCard.id);
+    if (isAlreadyEquipped) {
+      alert('This card is already equipped!');
+      return;
+    }
+    
+    // Check if we have space (max 5 cards)
+    if (equippedCards.length >= 5) {
+      alert('You can only equip up to 5 cards!');
+      return;
+    }
+    
+    // Add the selected card to equipped cards
+    const updatedEquippedCards = [...equippedCards, selectedCard];
+    
+    // Save to localStorage
+    localStorage.setItem('equippedCards', JSON.stringify(updatedEquippedCards));
+    
+    console.log('✅ Card equipped successfully:', selectedCard);
+    console.log('✅ Updated equipped cards:', updatedEquippedCards);
+    
+    // Show success message
+    alert(`"${selectedCard.name}" has been equipped!`);
+    
+    // Clear selected card and redirect to character room
+    localStorage.removeItem('selectedCard');
+    navigate('/character-room');
   };
 
   const handleRemoveClick = () => {
@@ -96,6 +130,12 @@ export default function Ticket() {
     
     // Update localStorage with the filtered cards
     localStorage.setItem('playerCards', JSON.stringify(updatedCards));
+    
+    // Also remove from equipped cards if it's equipped
+    const currentEquippedCards = JSON.parse(localStorage.getItem('equippedCards') || '[]');
+    const updatedEquippedCards = currentEquippedCards.filter(card => card.id !== selectedCard.id);
+    localStorage.setItem('equippedCards', JSON.stringify(updatedEquippedCards));
+    console.log('✅ Removed from equipped cards:', updatedEquippedCards);
     
     console.log('✅ Removed card from playerCards:', selectedCard);
     console.log('✅ Updated cards in localStorage:', updatedCards);

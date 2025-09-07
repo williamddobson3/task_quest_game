@@ -37,6 +37,7 @@ export default function Room() {
     const navigate = useNavigate();
     const [collectedCards, setCollectedCards] = useState([]);
     const [pendingCard, setPendingCard] = useState(null);
+    const [equippedCards, setEquippedCards] = useState([]);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -90,6 +91,11 @@ export default function Room() {
             console.log('Parsed pending card:', parsedPendingCard);
             setPendingCard(parsedPendingCard);
         }
+        
+        // Load equipped cards from localStorage
+        const savedEquippedCards = JSON.parse(localStorage.getItem('equippedCards') || '[]');
+        console.log('Equipped cards:', savedEquippedCards);
+        setEquippedCards(savedEquippedCards);
     }, []);
 
     // Add focus event listener to refresh data when returning to this page
@@ -114,6 +120,11 @@ export default function Room() {
                 setPendingCard(null);
                 console.log('No pending card found');
             }
+            
+            // Reload equipped cards
+            const savedEquippedCards = JSON.parse(localStorage.getItem('equippedCards') || '[]');
+            setEquippedCards(savedEquippedCards);
+            console.log('Refreshed equipped cards:', savedEquippedCards);
         };
 
         window.addEventListener('focus', handleFocus);
@@ -168,8 +179,14 @@ export default function Room() {
         return selectedImage;
     };
 
-    // Get the first 5 cards for display
-    const displayCards = collectedCards.slice(0, 5);
+    // Get equipped cards for display in equipment slots (max 5 cards)
+    const displayCards = [
+        equippedCards[0] || null,
+        equippedCards[1] || null,
+        equippedCards[2] || null,
+        equippedCards[3] || null,
+        equippedCards[4] || null
+    ];
 
     return (
         <div
