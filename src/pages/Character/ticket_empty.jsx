@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Room from './room';
 import card from '../../assets/card.png';
 import use from '../../assets/use.png';
@@ -9,6 +10,12 @@ import empty_board from '../../assets/empty_board.png';
 import back from '../../assets/back.png';
 
 export default function Ticket() {
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate('/character-room');
+  };
+
   return (
     <div className='w-full h-screen flex justify-center items-center'>
       <div className='w-full h-full flex justify-center items-end opacity-50 absolute overflow-hidden'>
@@ -16,7 +23,12 @@ export default function Ticket() {
       </div>
       <div className='w-full h-full flex flex-col justify-center items-center opacity-100 relative xl:flex-row'>
         <div className='w-vw h-full flex justify-center items-start absolute top-0 left-0'>
-          <img src={back} alt="" className='w-[100px] lg:w-[200px] h-auto ' />
+          <img 
+            src={back} 
+            alt="" 
+            className='w-[100px] lg:w-[200px] h-auto z-[100000] cursor-pointer hover:opacity-80' 
+            onClick={handleBackClick}
+          />
         </div>
         <div className='w-8/10 lg:w-6/10 xl:w-1/2 h-auto flex justify-center items-center lg:px-6 xl:pl-[100px]'>
           <img src={empty_board} alt="" className='w-full xl:w-[400px] h-full' />

@@ -153,6 +153,19 @@ export default function Room() {
         }
     };
 
+    const handleEmptyItemClick = () => {
+        // Navigate to ticket-empty page when clicking empty item
+        navigate('/ticket-empty');
+    };
+
+    const handleItemsBoxCardClick = (card) => {
+        if (card) {
+            // Store the clicked card data in localStorage for the ticket-ency page to access
+            localStorage.setItem('selectedCard', JSON.stringify(card));
+            navigate('/ticket-ency');
+        }
+    };
+
     // Function to get the correct card image based on card data
     const getCardImage = (card) => {
         if (!card) {
@@ -339,19 +352,24 @@ export default function Room() {
                                                 !shouldShow ? 'hidden' : ''
                                             }`}
                                         >
-                                            {card ? (
-                                                <div 
-                                                    className='w-full h-full flex items-center justify-center cursor-pointer hover:opacity-80'
-                                                    onClick={() => handleCardClick(card)}
-                                                >
-                                                    <img 
-                                                        src={getCardImage(card)} 
-                                                        alt={card.name}
-                                                        className='w-full h-full object-contain'
-                                                    />
-                                                </div>
-                                            ) : (
-                                                <img src={empty_item} alt="empty_item" className='w-full h-auto'/>
+                                             {card ? (
+                                                 <div 
+                                                     className='w-full h-full flex items-center justify-center cursor-pointer hover:opacity-80'
+                                                     onClick={() => handleItemsBoxCardClick(card)}
+                                                 >
+                                                     <img 
+                                                         src={getCardImage(card)} 
+                                                         alt={card.name}
+                                                         className='w-full h-full object-contain'
+                                                     />
+                                                 </div>
+                                             ) : (
+                                                <img 
+                                                    src={empty_item} 
+                                                    alt="empty_item" 
+                                                    className='w-full h-auto cursor-pointer hover:opacity-80'
+                                                    onClick={handleEmptyItemClick}
+                                                />
                                             )}
                                         </div>
                                     );

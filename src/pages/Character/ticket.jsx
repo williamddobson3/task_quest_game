@@ -101,53 +101,33 @@ export default function Ticket() {
     if (!selectedCard) return;
     
     // Show confirmation dialog
-    const confirmRemove = window.confirm(`Are you sure you want to remove "${selectedCard.name}" from your collection?`);
+    const confirmRemove = window.confirm(`Are you sure you want to unequip "${selectedCard.name}" from your equipment slots?`);
     if (!confirmRemove) return;
     
-    console.log('Starting card removal process for:', selectedCard);
+    console.log('Starting equipment removal process for:', selectedCard);
     
-    // Check if this is a pending card (from today's card collection)
-    const today = new Date().toDateString();
-    const pendingCardData = localStorage.getItem('pendingCard');
-    const pendingCardDate = localStorage.getItem('pendingCardDate');
-    
-    if (pendingCardData && pendingCardDate === today) {
-      const pendingCard = JSON.parse(pendingCardData);
-      if (pendingCard.id === selectedCard.id) {
-        // Remove pending card
-        localStorage.removeItem('pendingCard');
-        localStorage.removeItem('pendingCardDate');
-        console.log('✅ Removed pending card from localStorage:', selectedCard);
-      }
-    }
-    
-    // Get current player cards from localStorage
-    const currentCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
-    console.log('Current cards before removal:', currentCards);
-    
-    // Remove the selected card from the array
-    const updatedCards = currentCards.filter(card => card.id !== selectedCard.id);
-    
-    // Update localStorage with the filtered cards
-    localStorage.setItem('playerCards', JSON.stringify(updatedCards));
-    
-    // Also remove from equipped cards if it's equipped
+    // Only remove from equipped cards, keep in player collection
     const currentEquippedCards = JSON.parse(localStorage.getItem('equippedCards') || '[]');
+    console.log('Current equipped cards before removal:', currentEquippedCards);
+    
+    // Remove the selected card from equipped cards only
     const updatedEquippedCards = currentEquippedCards.filter(card => card.id !== selectedCard.id);
+    
+    // Update localStorage with the filtered equipped cards
     localStorage.setItem('equippedCards', JSON.stringify(updatedEquippedCards));
     console.log('✅ Removed from equipped cards:', updatedEquippedCards);
     
-    console.log('✅ Removed card from playerCards:', selectedCard);
-    console.log('✅ Updated cards in localStorage:', updatedCards);
+    // Verify the card is still in player collection
+    const currentPlayerCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
+    const cardStillInCollection = currentPlayerCards.some(card => card.id === selectedCard.id);
+    console.log('✅ Card still in player collection:', cardStillInCollection);
     
     // Clear the selected card from localStorage
     localStorage.removeItem('selectedCard');
     console.log('✅ Cleared selectedCard from localStorage');
     
-    // Verify removal
-    const verifyCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
-    const cardStillExists = verifyCards.some(card => card.id === selectedCard.id);
-    console.log('✅ Verification - Card still exists in localStorage:', cardStillExists);
+    // Show success message
+    alert(`"${selectedCard.name}" has been unequipped but remains in your collection!`);
     
     // Redirect to character room
     navigate('/character-room');
