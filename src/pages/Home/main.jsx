@@ -54,6 +54,25 @@ export default function Main() {
         navigate('/gacha-room');
     };
 
+    const handleClanClick = () => {
+        const userClan = localStorage.getItem('userClan');
+        if (userClan) {
+            // User is logged into a clan
+            const clanData = JSON.parse(userClan);
+            const currentUser = localStorage.getItem('userName') || 'Player';
+            
+            // Check if user is the leader (creator) of the clan
+            if (clanData.leaderId === currentUser) {
+                navigate('/clan-leader');
+            } else {
+                navigate('/clan-member');
+            }
+        } else {
+            // User is not logged into any clan
+            navigate('/clain-main');
+        }
+    };
+
     const handleOneClick = () => {
         // Give player 1 ticket
         const currentTickets = parseInt(localStorage.getItem('gachaTickets') || '0');
@@ -158,24 +177,23 @@ export default function Main() {
                     </div>
                 </main>
                 <footer className='w-full h-1/10 gap-3 lg:gap-1 flex justify-between xl:justify-end items-center px-3 absolute bottom-5'>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={() => navigate('/home')}>
                         <img src={home} alt="home" className='w-full h-auto'/>
                     </div>
-                     <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
-                         <img src={character} alt="character" className='w-full h-auto cursor-pointer hover:opacity-80' onClick={() => navigate('/character-room')}/>
+                     <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={() => navigate('/character-room')}>
+                         <img src={character} alt="character" className='w-full h-auto'/>
                      </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleTicketClick}>
                         <img 
                             src={ticket} 
                             alt="ticket" 
-                            className='w-full h-auto cursor-pointer hover:opacity-80'
-                            onClick={handleTicketClick}
+                            className='w-full h-auto'
                         />
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={() => navigate('/battle-main')}>
                         <img src={battle} alt="battle" className='w-full h-auto'/>
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleClanClick}>
                         <img src={clan} alt="clan" className='w-full h-auto'/>
                     </div>
                 </footer>

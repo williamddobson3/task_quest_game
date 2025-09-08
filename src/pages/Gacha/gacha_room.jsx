@@ -49,7 +49,19 @@ export default function GachaRoom() {
     };
 
     const handleClanClick = () => {
-        navigate('/clain-main');
+        const userClan = localStorage.getItem('userClan');
+        if (userClan) {
+            const clanData = JSON.parse(userClan);
+            const currentUser = localStorage.getItem('userName') || 'Player';
+            
+            if (clanData.leaderId === currentUser) {
+                navigate('/clan-leader');
+            } else {
+                navigate('/clan-member');
+            }
+        } else {
+            navigate('/clain-main');
+        }
     };
 
     const handleOncePullClick = () => {

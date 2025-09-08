@@ -21,6 +21,16 @@ export default function ClainMain() {
         navigate('/create-selection');
     };
 
+    const handleParticipantClick = () => {
+        navigate('/part-selection');
+    };
+
+    const handleHomeClick = () => navigate('/home');
+    const handleCharacterClick = () => navigate('/character-room');
+    const handleTicketClick = () => navigate('/gacha-room');
+    const handleBattleClick = () => navigate('/battle-main');
+    const handleClanClick = () => navigate('/clain-main');
+
     return (
         <div
             className="w-full h-screen lg:bg-[url('/src/assets/background_mac.png')] bg-cover bg-center"
@@ -65,24 +75,29 @@ export default function ClainMain() {
                             />
                         </div>
                         <div className="w-[250px] lg:w-[500px] xl:w-[400px] h-auto flex justify-center items-center">
-                            <img src={partisipant} alt="" className='w-full h-auto' />
+                            <img 
+                                src={partisipant} 
+                                alt="" 
+                                className='w-full h-auto cursor-pointer hover:opacity-80'
+                                onClick={handleParticipantClick}
+                            />
                         </div>
                     </div>
                 </main>
                 <footer className='w-full h-1/10 gap-3 lg:gap-1 flex justify-between xl:justify-end items-center px-3 absolute bottom-5'>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleHomeClick}>
                         <img src={home} alt="home" className='w-full h-auto' />
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleCharacterClick}>
                         <img src={character} alt="character" className='w-full h-auto' />
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleTicketClick}>
                         <img src={ticket} alt="ticket" className='w-full h-auto' />
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleBattleClick}>
                         <img src={battle} alt="battle" className='w-full h-auto' />
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleClanClick}>
                         <img src={clan} alt="clan" className='w-full h-auto' />
                     </div>
                 </footer>

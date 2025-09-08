@@ -1,12 +1,43 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import PartSelection from "./part_selection";
 import back from '../../assets/back.png';
 import part_select from '../../assets/part_select.png';
 import filter_box from '../../assets/filter_box.png';
 import sortbynum from '../../assets/sortbynum.png';
 import sortbtn from '../../assets/sortbtn.png';
+import sortbymember from '../../assets/sortbymember.png';
+import sortbyaction from '../../assets/sortbyaction.png';
+import sortbynew from '../../assets/sortbynew.png';
+import sortbylogin from '../../assets/sortbylogin.png';
 
 export default function Sort() {
+  const navigate = useNavigate();
+
+  // Sort mapping based on the specification
+  const sortMapping = {
+    'sortbymember': 'members',      // メンバー数順
+    'sortbyaction': 'activity',     // 活動頻度順
+    'sortbynew': 'newest',          // 新着順
+    'sortbylogin': 'joinability'    // 加入しやすさ順
+  };
+
+  // Handle back button
+  const handleBackClick = () => {
+    navigate('/part-selection');
+  };
+
+  // Handle sort selection
+  const handleSortClick = (sortKey) => {
+    const sortValue = sortMapping[sortKey];
+    if (sortValue) {
+      // Save selected sort to localStorage
+      localStorage.setItem('selectedClanSort', sortValue);
+      // Navigate back to part-selection with sort applied
+      navigate('/part-selection');
+    }
+  };
+
   return (
     <div className="w-full h-screen flex justify-center items-center relative">
       <div className="w-full h-full flex opacity-50 z-[-1] ">
@@ -14,7 +45,12 @@ export default function Sort() {
       </div>
       <div className="w-full h-full flex z-[1] absolute top-0 left-0 absolute ">
         <div className='w-vw h-full flex justify-center items-start absolute top-0 left-0'>
-          <img src={back} alt="" className='w-[100px] lg:w-[200px] h-auto ' />
+          <img 
+            src={back} 
+            alt="" 
+            className='w-[100px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' 
+            onClick={handleBackClick}
+          />
         </div>
         <div className="absolute top-20 left-0 w-full h-full flex justify-center items-center">
           <div className='w-full lg:w-[800px] xl:w-[500px] h-auto flex justify-center items-center'>
@@ -26,16 +62,36 @@ export default function Sort() {
             </div>
             <div className="w-auto h-auto flex flex-col justify-center items-center gap-5 lg:gap-10 xl:gap-5">
               <div className="w-[200px] lg:w-[400px] xl:w-[250px] h-auto flex justify-center items-center gap-5 lg:gap-20 xl:gap-10">
-                <img src={sortbynum} alt="" className="w-full h-auto" />
+                <img 
+                  src={sortbymember} 
+                  alt="" 
+                  className="w-full h-auto cursor-pointer hover:opacity-80" 
+                  onClick={() => handleSortClick('sortbymember')}
+                />
               </div>
               <div className="w-[200px] lg:w-[400px] xl:w-[250px] h-auto flex justify-center items-center gap-5 lg:gap-20 xl:gap-10">
-                <img src={sortbynum} alt="" />
+                <img 
+                  src={sortbyaction} 
+                  alt="" 
+                  className="w-full h-auto cursor-pointer hover:opacity-80" 
+                  onClick={() => handleSortClick('sortbyaction')}
+                />
               </div>
               <div className="w-[200px] lg:w-[400px] xl:w-[250px] h-auto flex justify-center items-center gap-5 lg:gap-20 xl:gap-10">
-                <img src={sortbynum} alt="" />
+                <img 
+                  src={sortbynew} 
+                  alt="" 
+                  className="w-full h-auto cursor-pointer hover:opacity-80" 
+                  onClick={() => handleSortClick('sortbynew')}
+                />
               </div>
               <div className="w-[200px] lg:w-[400px] xl:w-[250px] h-auto flex justify-center items-center gap-5 lg:gap-20 xl:gap-10">
-                <img src={sortbynum} alt="" />
+                <img 
+                  src={sortbylogin} 
+                  alt="" 
+                  className="w-full h-auto cursor-pointer hover:opacity-80" 
+                  onClick={() => handleSortClick('sortbylogin')}
+                />
               </div>
             </div>
           </div>

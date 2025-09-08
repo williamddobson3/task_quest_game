@@ -182,6 +182,25 @@ export default function Room() {
         navigate('/gacha-room');
     };
 
+    const handleHomeClick = () => navigate('/home');
+    const handleCharacterClick = () => navigate('/character-room');
+    const handleBattleClick = () => navigate('/battle-main');
+    const handleClanClick = () => {
+        const userClan = localStorage.getItem('userClan');
+        if (userClan) {
+            const clanData = JSON.parse(userClan);
+            const currentUser = localStorage.getItem('userName') || 'Player';
+            
+            if (clanData.leaderId === currentUser) {
+                navigate('/clan-leader');
+            } else {
+                navigate('/clan-member');
+            }
+        } else {
+            navigate('/clain-main');
+        }
+    };
+
     const handleOnePullClick = () => {
         // Check if player has at least 1 ticket
         const currentTickets = parseInt(localStorage.getItem('gachaTickets') || '0');
@@ -332,7 +351,7 @@ export default function Room() {
                             <img src={main_item} alt="main_item" className='w-full h-auto'/>
                             {displayCards[0] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute'
                                     onClick={() => handleCardClick(displayCards[0])}
                                 >
                                     <img 
@@ -355,7 +374,7 @@ export default function Room() {
                             <img src={first_item} alt="first_item" className='w-full h-auto'/>
                             {displayCards[1] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute'
                                     onClick={() => handleCardClick(displayCards[1])}
                                 >
                                     <img 
@@ -376,7 +395,7 @@ export default function Room() {
                             <img src={second_item} alt="second_item" className='w-full h-auto'/>
                             {displayCards[2] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute'
                                     onClick={() => handleCardClick(displayCards[2])}
                                 >
                                     <img 
@@ -397,7 +416,7 @@ export default function Room() {
                             <img src={third_item} alt="third_item" className='w-full h-auto'/>
                             {displayCards[3] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute'
                                     onClick={() => handleCardClick(displayCards[3])}
                                 >
                                     <img 
@@ -418,7 +437,7 @@ export default function Room() {
                             <img src={fourth_item} alt="fourth_item" className='w-full h-auto'/>
                             {displayCards[4] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute   '
                                     onClick={() => handleCardClick(displayCards[4])}
                                 >
                                     <img 
@@ -514,24 +533,23 @@ export default function Room() {
                     </div>
                 </main>
                 <footer className='w-full h-1/20 gap-3 lg:gap-1 flex justify-between xl:justify-end items-center px-3 absolute bottom-0 lg:bottom-5'>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleHomeClick}>
                         <img src={home} alt="home" className='w-full h-auto'/>
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleCharacterClick}>
                         <img src={character} alt="character" className='w-full h-auto'/>
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleTicketClick}>
                         <img 
                             src={ticket} 
                             alt="ticket" 
-                            className='w-full h-auto cursor-pointer hover:opacity-80'
-                            onClick={handleTicketClick}
+                            className='w-full h-auto'
                         />
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleBattleClick}>
                         <img src={battle} alt="battle" className='w-full h-auto'/>
                     </div>
-                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
+                    <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleClanClick}>
                         <img src={clan} alt="clan" className='w-full h-auto'/>
                     </div>
                 </footer>
