@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import background_tablet from '../../assets/background_tablet.png';
 import part_select from '../../assets/part_select.png';
@@ -50,6 +50,19 @@ export default function CreateSelection() {
     { id: 'approval', name: '承認制', description: 'リーダーの承認が必要' }
   ];
 
+  // Load selected category from localStorage on component mount
+  useEffect(() => {
+    const selectedCategory = localStorage.getItem('selectedCategory');
+    if (selectedCategory) {
+      setFormData(prev => ({
+        ...prev,
+        category: selectedCategory
+      }));
+      // Clear the selected category from localStorage after loading
+      localStorage.removeItem('selectedCategory');
+    }
+  }, []);
+
   // Handle form input changes
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
@@ -63,30 +76,35 @@ export default function CreateSelection() {
     navigate('/clain-main');
   };
 
+  // Handle category click - redirect to create-category page
+  const handleCategoryClick = () => {
+    navigate('/create-category');
+  };
+
   // Handle form submission
   const handleCreateClan = () => {
     // Validate required fields
     if (!formData.name.trim()) {
-      alert('クラン名を入力してください');
+      //alert('クラン名を入力してください');
       return;
     }
     if (!formData.category) {
-      alert('カテゴリを選択してください');
+      //alert('カテゴリを選択してください');
       return;
     }
     if (!formData.activityLevel) {
-      alert('活動頻度を選択してください');
+      //alert('活動頻度を選択してください');
       return;
     }
     if (!formData.joinMethod) {
-      alert('参加方式を選択してください');
+      //alert('参加方式を選択してください');
       return;
     }
 
     // Check if user already has a clan
     const existingClan = localStorage.getItem('userClan');
     if (existingClan) {
-      alert('すでにクランに所属しています。1人1クランまでです。');
+      //alert('すでにクランに所属しています。1人1クランまでです。');
       return;
     }
 
@@ -115,7 +133,7 @@ export default function CreateSelection() {
     existingClans.push(clanData);
     localStorage.setItem('clanList', JSON.stringify(existingClans));
 
-    alert(`クラン「${formData.name}」を作成しました！`);
+    //alert(`クラン「${formData.name}」を作成しました！`);
     navigate('/clan-leader');
   };
 
@@ -151,7 +169,7 @@ export default function CreateSelection() {
             </div>
             <div className="w-[200px] lg:w-[350px] xl:w-[300px] h-auto flex flex-col justify-center items-center relative">
               <p className='text-center text-[20px] lg:text-[40px] xl:text-[30px] font-bold mb-2'>カテゴリ</p>
-              <div className='w-full h-auto relative'>
+              <div className='w-full h-auto relative cursor-pointer hover:opacity-80' onClick={handleCategoryClick}>
                 <img src={frame} alt="" className='w-full h-auto' />
                 <select
                   value={formData.category}

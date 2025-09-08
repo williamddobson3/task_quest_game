@@ -32,13 +32,13 @@ export default function BattleMain() {
     const handleOkClick = () => {
         // Check if it's Monday (battle day)
         if (!BattleDataManager.isBattleDay()) {
-            alert(BattleDataManager.getBattleEligibilityMessage());
+            //alert(BattleDataManager.getBattleEligibilityMessage());
             return;
         }
         
         // Check if player has already battled today
         if (BattleDataManager.hasBattledToday()) {
-            alert(BattleDataManager.getBattleEligibilityMessage());
+            //alert(BattleDataManager.getBattleEligibilityMessage());
             return;
         }
         
@@ -48,7 +48,7 @@ export default function BattleMain() {
         if (!battleDataSummary.hasData) {
             // First battle - save current state and proceed
             BattleDataManager.saveCurrentStateForBattle();
-            alert('初回バトルです！今の状態が来週の対戦相手として保存されました。');
+            //alert('初回バトルです！今の状態が来週の対戦相手として保存されました。');
         }
         
         // Mark that player is about to battle today

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import background_tablet from '../../assets/background_tablet.png';
 import part_select from '../../assets/part_select.png';
 import sort from '../../assets/sort.png';
-import part_one from '../../assets/part_one.png';
+import part_one from '../../assets/part_one_again.png';
 import part_two from '../../assets/part_two.png';
 import train_type from '../../assets/train_type.png';
 import back from '../../assets/back.png';
@@ -251,11 +251,11 @@ export default function PartSelection() {
             </div>
           </div>
         )}
-        <div className="w-[300px] lg:w-[800px] xl:w-[500px] h-auto flex flex-col justify-center items-center gap-10 max-h-[400px] overflow-y-auto">
+        <div className="w-[300px] lg:w-[800px] xl:w-[500px] h-auto flex flex-col justify-center items-center gap-10 max-h-[700px] overflow-y-auto">
           {filteredAndSortedClans.length === 0 ? (
             <div className="w-full h-auto flex justify-center items-center relative">
-              <img src={part_one} alt="" />
-              <p className='absolute top-4 lg:top-10 left-30 lg:left-70 xl:left-60 z-[100] text-[20px] lg:text-[40px] xl:text-[30px] text-white font-bold text-center'>
+              <img src={part_one} alt="" className='lg:w-[800px] lg:h-auto' />
+              <p className='absolute top-15 lg:top-40 xl:top-30 w-[250px] left-5 lg:w-full lg:left-0 xl:left-0 z-[100] text-[20px] lg:text-[40px] xl:text-[30px] font-bold text-center'>
                 利用可能なクランがありません
               </p>
             </div>

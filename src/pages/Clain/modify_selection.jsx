@@ -55,6 +55,19 @@ export default function ModifySelection() {
     loadClanData();
   }, [navigate]);
 
+  // Load selected category from localStorage on component mount
+  useEffect(() => {
+    const selectedCategory = localStorage.getItem('selectedCategory');
+    if (selectedCategory) {
+      setFormData(prev => ({
+        ...prev,
+        category: selectedCategory
+      }));
+      // Clear the selected category from localStorage after loading
+      localStorage.removeItem('selectedCategory');
+    }
+  }, []);
+
   // Clan categories
   const categories = [
     { id: 'study', name: '勉強集中型', description: '学習習慣に特化' },
@@ -94,6 +107,11 @@ export default function ModifySelection() {
   // Handle quit modify button
   const handleQuitModifyClick = () => {
     navigate('/quit-create');
+  };
+
+  // Handle category click - redirect to modify-category page
+  const handleCategoryClick = () => {
+    navigate('/modify-category');
   };
 
   // Handle form submission (modify existing clan)
@@ -149,11 +167,11 @@ export default function ModifySelection() {
         localStorage.setItem('clanList', JSON.stringify(existingClans));
       }
 
-      alert(`クラン「${formData.name}」の情報を更新しました！`);
+      //alert(`クラン「${formData.name}」の情報を更新しました！`);
       navigate('/clan-leader');
     } catch (error) {
       console.error('Error updating clan:', error);
-      alert('クラン情報の更新に失敗しました。');
+      //alert('クラン情報の更新に失敗しました。');
     }
   };
 
@@ -189,7 +207,7 @@ export default function ModifySelection() {
             </div>
             <div className="w-[200px] lg:w-[350px] xl:w-[300px] h-auto flex flex-col justify-center items-center relative">
               <p className='text-center text-[20px] lg:text-[40px] xl:text-[30px] font-bold mb-2'>カテゴリ</p>
-              <div className='w-full h-auto relative'>
+              <div className='w-full h-auto relative cursor-pointer hover:opacity-80' onClick={handleCategoryClick}>
                 <img src={frame} alt="" className='w-full h-auto' />
                 <select
                   value={formData.category}

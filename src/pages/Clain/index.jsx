@@ -6,3 +6,5 @@ export { default as Sort } from './sort';
 export { default as ClanDescription } from './clan_description';
 export { default as ModifySelection } from './modify_selection';
 export { default as QuitCreate } from './quit_create';
+export { default as ModifyCategory } from './modify_category';
+export { default as CreateCategory } from './create_category';

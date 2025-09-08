@@ -62,7 +62,7 @@ export default function Ticket() {
     // Check if card is already equipped
     const isAlreadyEquipped = equippedCards.some(card => card.id === selectedCard.id);
     if (isAlreadyEquipped) {
-      alert('This card is already equipped!');
+      //alert('This card is already equipped!');
       return;
     }
     
@@ -71,7 +71,7 @@ export default function Ticket() {
       // Check if there's already a job card equipped
       const existingJobCard = equippedCards.find(card => card.type === 'job');
       if (existingJobCard) {
-        alert('You can only equip one job card at a time! Please unequip the current job card first.');
+        //alert('You can only equip one job card at a time! Please unequip the current job card first.');
         return;
       }
       
@@ -99,7 +99,7 @@ export default function Ticket() {
       console.log('✅ Updated equipped cards:', updatedEquippedCards);
       
       // Show success message
-      alert(`"${selectedCard.name}" has been equipped as your job card!`);
+      //alert(`"${selectedCard.name}" has been equipped as your job card!`);
       
       // Clear selected card and redirect to character room
       localStorage.removeItem('selectedCard');
@@ -109,7 +109,7 @@ export default function Ticket() {
     
     // For non-job cards, check if we have space (max 5 cards)
     if (equippedCards.length >= 5) {
-      alert('You can only equip up to 5 cards!');
+      //alert('You can only equip up to 5 cards!');
       return;
     }
     
@@ -123,7 +123,7 @@ export default function Ticket() {
     console.log('✅ Updated equipped cards:', updatedEquippedCards);
     
     // Show success message
-    alert(`"${selectedCard.name}" has been equipped!`);
+    //alert(`"${selectedCard.name}" has been equipped!`);
     
     // Clear selected card and redirect to character room
     localStorage.removeItem('selectedCard');
@@ -181,7 +181,7 @@ export default function Ticket() {
     console.log('✅ Cleared selectedCard from localStorage');
     
     // Show success message
-    alert(`"${selectedCard.name}" has been unequipped and returned to your item-box!`);
+    //alert(`"${selectedCard.name}" has been unequipped and returned to your item-box!`);
     
     // Redirect to character room
     navigate('/character-room');

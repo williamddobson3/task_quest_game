@@ -93,19 +93,19 @@ export default function ClanDescription() {
       if (clan.leaderId === currentUser) {
         // User is the leader of this clan - login and redirect to clan-leader
         localStorage.setItem('userClan', JSON.stringify(clan));
-        alert(`クラン「${clan.name}」にログインしました！`);
+        //alert(`クラン「${clan.name}」にログインしました！`);
         navigate('/clan-leader');
       } else {
         // User is not the leader - check if they can join as member
         if (clan.members.includes(currentUser)) {
           // User is already a member of this clan - login and redirect to clan-member
           localStorage.setItem('userClan', JSON.stringify(clan));
-          alert(`クラン「${clan.name}」にログインしました！`);
+          //alert(`クラン「${clan.name}」にログインしました！`);
           navigate('/clan-member');
         } else {
           // User is not a member - try to join the clan
           if (clan.members.length >= clan.maxMembers) {
-            alert('このクランは満員です。');
+            //alert('このクランは満員です。');
             return;
           }
           
@@ -122,11 +122,11 @@ export default function ClanDescription() {
             localStorage.setItem('clanList', JSON.stringify(updatedClans));
             localStorage.setItem('userClan', JSON.stringify(updatedClan));
             
-            alert(`クラン「${clan.name}」に参加しました！`);
+            //alert(`クラン「${clan.name}」に参加しました！`);
             navigate('/clan-member');
           } else {
             // Approval required - show message
-            alert(`クラン「${clan.name}」への参加申請を送信しました。リーダーの承認をお待ちください。`);
+            //alert(`クラン「${clan.name}」への参加申請を送信しました。リーダーの承認をお待ちください。`);
           }
         }
       }

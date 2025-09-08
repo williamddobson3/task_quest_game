@@ -12,7 +12,7 @@ export default function LoginForm() {
 
   const handleComplete = () => {
     if (userName.trim() === '') {
-      alert('ユーザー名を入力してください');
+      //alert('ユーザー名を入力してください');
       return;
     }
 

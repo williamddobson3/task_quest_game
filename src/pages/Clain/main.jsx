@@ -46,7 +46,7 @@ export default function ClainMain() {
         setTicketCount(newTicketCount);
         
         // Show success message
-        alert('You received 1 gacha ticket!');
+        //alert('You received 1 gacha ticket!');
         
         console.log('Tickets updated:', newTicketCount);
     };

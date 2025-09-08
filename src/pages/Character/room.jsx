@@ -173,7 +173,7 @@ export default function Room() {
                 
                 if (currentJobCard) {
                     // There's already a job card in main_item, don't allow adding another
-                    alert('You already have a job card equipped! Please unequip the current job card first.');
+                    //alert('You already have a job card equipped! Please unequip the current job card first.');
                     return;
                 } else {
                     // No job card in main_item, equip this job card
@@ -203,7 +203,7 @@ export default function Room() {
                     console.log('✅ Character job saved:', card);
                     
                     // Show success message
-                    alert(`"${card.name}" has been equipped as your job card!`);
+                    //alert(`"${card.name}" has been equipped as your job card!`);
                     return;
                 }
             }
@@ -291,7 +291,7 @@ export default function Room() {
     // Test function for stat growth (for development/testing)
     const handleTestStatGrowth = () => {
         const testStats = StatManager.improveStats('study');
-        alert('Test stat growth applied! Check the stat display.');
+        //alert('Test stat growth applied! Check the stat display.');
         // Force re-render of stat display
         setStatRefreshTrigger(prev => prev + 1);
     };

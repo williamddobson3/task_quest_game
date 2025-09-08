@@ -13,6 +13,7 @@ import { StatManager } from '../../utils/statSystem';
 import { CardStatManager } from '../../utils/cardStatSystem';
 import { BattleNotificationManager } from '../../utils/battleNotifications';
 import BattleNotification from '../../components/BattleNotification';
+import HPProgressBar from '../../components/HPProgressBar';
 
 
 export default function Battle() {
@@ -269,7 +270,14 @@ export default function Battle() {
                     <img src={enemy} alt="" className='xl:w-full xl:h-auto' />
                 </div>
                 <div className="w-[200px] lg:w-[400px] h-auto flex justify-center items-center xl:absolute xl:top-10">
-                    <img src={progress} alt="" />
+                    <HPProgressBar 
+                        currentHP={enemyHP}
+                        maxHP={pastSelfData ? CardStatManager.calculateHP(pastSelfData.stats, pastSelfData.equippedCards) : 100}
+                        label="過去の自分"
+                        isEnemy={true}
+                        width={200}
+                        height={100}
+                    />
                 </div>
                 <div className="w-full xl:w-auto h-auto flex flex-col justify-center items-center gap-3 xl:gap-5 z-[1000000]">
                     <div className="w-[150px] lg:w-[300px] h-auto flex justify-center items-center">
@@ -296,7 +304,14 @@ export default function Battle() {
                     </div>
                 </div>
                 <div className="w-[200px] lg:w-[400px] h-auto flex justify-center items-center xl:absolute xl:bottom-10">
-                    <img src={progress} alt="" className="w-full h-auto" />
+                    <HPProgressBar 
+                        currentHP={playerHP}
+                        maxHP={CardStatManager.calculateHP(StatManager.getStats(), CardStatManager.getEquippedCards())}
+                        label="あなた"
+                        isEnemy={false}
+                        width={200}
+                        height={100}
+                    />
                 </div>
             </div>
             

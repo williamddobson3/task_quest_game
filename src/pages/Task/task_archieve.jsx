@@ -27,7 +27,7 @@ export default function TaskArchieve() {
     localStorage.setItem('gachaTickets', (currentTickets + 5).toString());
     
     // Show success message
-    alert('クランタスク達成！全メンバーにガチャ券×5を配布しました！');
+    //alert('クランタスク達成！全メンバーにガチャ券×5を配布しました！');
   }, []);
 
   const handleBackClick = () => {

@@ -15,7 +15,7 @@ export default function QuitMember() {
   // Handle quit confirmation
   const handleQuitConfirm = () => {
     localStorage.removeItem('userClan');
-    alert('クランから脱退しました。');
+    //alert('クランから脱退しました。');
     navigate('/clain-main');
   };
 

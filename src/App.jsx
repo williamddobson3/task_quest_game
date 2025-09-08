@@ -7,7 +7,7 @@ import { Room, Ticket, TicketEncy, TicketEmpty, TicketFilter, AwakeCharacter, Ch
 import { GachaRoom, GachaOne, GachaTen, GachaLack } from './pages/Gacha';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { BattleMain, Battle, ResultWin, BattleMonday, ResultLose } from './pages/Battle';
-import { ClainMain, PartSelection, CreateSelection, PartCategory, Sort, ClanDescription, ModifySelection, QuitCreate } from './pages/Clain';
+import { ClainMain, PartSelection, CreateSelection, PartCategory, Sort, ClanDescription, ModifySelection, QuitCreate, ModifyCategory, CreateCategory } from './pages/Clain';
 import { MainMember, ClanLeader, MemberDetail, QuitMember, Dissolve, Explusion, MemberDetailModify } from './pages/ClanMember';
 import { First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Nineth, Tenth, Eleventh } from './pages/Tutorial';
 import { JobCards, CardDesc } from './pages/Cards';
@@ -88,6 +88,8 @@ function App() {
         <Route path='/member-detail-modify' element={<MemberDetailModify />} />
         <Route path='/quit-create' element={<QuitCreate />} />
         <Route path='/task-archieve' element={<TaskArchieve />} />
+        <Route path='/modify-category' element={<ModifyCategory />} />
+        <Route path='/create-category' element={<CreateCategory />} />
       </Routes>
     </Router>
   )

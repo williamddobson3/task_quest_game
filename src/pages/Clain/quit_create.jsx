@@ -25,7 +25,7 @@ export default function QuitCreate() {
       // Remove user clan
       localStorage.removeItem('userClan');
       
-      alert('クランを削除しました。');
+      //alert('クランを削除しました。');
       navigate('/clain-main');
     }
   };

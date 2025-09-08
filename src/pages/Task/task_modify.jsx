@@ -87,10 +87,10 @@ export default function TaskModify() {
                     return `${statName} +${improvement.toFixed(1)}`;
                 }).join(', ');
                 
-                alert(`タスクをアーカイブしました！\nステータス向上: ${improvementText}`);
+                //alert(`タスクをアーカイブしました！\nステータス向上: ${improvementText}`);
                 
                 if (hasAwakened) {
-                    alert('🎉 キャラクターが覚醒しました！\n最大ステータスが120に拡張されました！');
+                    //alert('🎉 キャラクターが覚醒しました！\n最大ステータスが120に拡張されました！');
                 }
             }
             console.log('taskData', taskData);
