@@ -2,15 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gacha_room_tablet from '../../assets/gacha_room_tablet.png';
 import return_png from '../../assets/return.png';
-
-// Card images
-import first_job from '../../assets/first_job.png';
-import second_job from '../../assets/second_job.png';
-import third_job from '../../assets/third_job.png';
-import fourth_job from '../../assets/fourth_job.png';
-import fifth_job from '../../assets/fifth_job.png';
-import card_two from '../../assets/card_two.png';
-import card_free from '../../assets/card_free.png';
+import { getCardImageUrl, getFallbackImageUrl } from '../../utils/cardImageLoader';
 
 export default function GachaOne() {
     const navigate = useNavigate();
@@ -37,19 +29,16 @@ export default function GachaOne() {
 
     // Function to get the correct card image based on card data
     const getCardImage = (card) => {
-        if (!card) return null;
+        if (!card) return getFallbackImageUrl();
         
-        const imageMap = {
-            'first_job': first_job,
-            'second_job': second_job,
-            'third_job': third_job,
-            'fourth_job': fourth_job,
-            'fifth_job': fifth_job,
-            'card_two': card_two,
-            'card_free': card_free
-        };
+        // Try to get the dynamic image URL for cards from /assets/cards/
+        const dynamicImageUrl = getCardImageUrl(card.image);
+        if (dynamicImageUrl) {
+            return dynamicImageUrl;
+        }
         
-        return imageMap[card.image] || null;
+        // Fallback to blank card if no image found
+        return getFallbackImageUrl();
     };
 
     const handleReturnClick = () => {

@@ -14,51 +14,118 @@ export const CARD_STAT_BONUSES = {
         [STATS.KNOWLEDGE]: 2.0,
         [STATS.PERSISTENCE]: 1.5
     },
-    'third_job': { // 忍者
+    'third_job': { // 冒険者
         [STATS.ACTION_POWER]: 2.0,
         [STATS.STRENGTH]: 1.0
     },
-    'fourth_job': { // 星見士
-        [STATS.KNOWLEDGE]: 1.5,
-        [STATS.ACTION_POWER]: 1.5
+    'fourth_job': { // 守護者
+        [STATS.STAMINA]: 2.0,
+        [STATS.STRENGTH]: 1.5
     },
-    'fifth_job': { // 書庫守
-        [STATS.PERSISTENCE]: 2.5,
-        [STATS.KNOWLEDGE]: 1.0
+    'fifth_job': { // 調和者
+        [STATS.KNOWLEDGE]: 1.5,
+        [STATS.ACTION_POWER]: 2.0
+    },
+    'master_scholar': { // 大賢者 (R)
+        [STATS.KNOWLEDGE]: 3.0,
+        [STATS.PERSISTENCE]: 2.5
+    },
+    'legendary_warrior': { // 伝説の戦士 (SR)
+        [STATS.STRENGTH]: 4.0,
+        [STATS.STAMINA]: 3.0,
+        [STATS.ACTION_POWER]: 2.0
+    },
+    'divine_guardian': { // 神聖なる守護者 (UR)
+        [STATS.STRENGTH]: 5.0,
+        [STATS.STAMINA]: 5.0,
+        [STATS.KNOWLEDGE]: 3.0,
+        [STATS.ACTION_POWER]: 3.0,
+        [STATS.PERSISTENCE]: 3.0
     },
     
     // Weapon Cards (provide attack bonuses)
-    'card_two': { // Example weapon
+    'card_two': { // 鍛錬者の剣
         [STATS.STRENGTH]: 1.5,
         [STATS.ACTION_POWER]: 0.5
     },
-    'card_free': { // Example weapon
-        [STATS.STRENGTH]: 1.0
+    'iron_sword': { // 鉄の剣
+        [STATS.STRENGTH]: 1.2,
+        [STATS.ACTION_POWER]: 0.3
+    },
+    'magic_staff': { // 魔法の杖 (R)
+        [STATS.KNOWLEDGE]: 2.0,
+        [STATS.PERSISTENCE]: 1.0
+    },
+    'legendary_blade': { // 伝説の刃 (SR)
+        [STATS.STRENGTH]: 3.0,
+        [STATS.ACTION_POWER]: 2.0
+    },
+    'divine_sword': { // 神聖なる剣 (UR)
+        [STATS.STRENGTH]: 4.0,
+        [STATS.ACTION_POWER]: 3.0,
+        [STATS.KNOWLEDGE]: 2.0
     },
     
     // Magic Cards (provide magic bonuses)
-    'magic_card_1': {
-        [STATS.KNOWLEDGE]: 1.5,
+    'fire_ball': { // ファイアボール
+        [STATS.KNOWLEDGE]: 1.0,
+        [STATS.ACTION_POWER]: 0.5
+    },
+    'heal_spell': { // ヒール
+        [STATS.STAMINA]: 1.5,
         [STATS.PERSISTENCE]: 0.5
+    },
+    'lightning_bolt': { // ライトニングボルト (R)
+        [STATS.KNOWLEDGE]: 2.0,
+        [STATS.ACTION_POWER]: 1.5
+    },
+    'meteor': { // メテオ (SR)
+        [STATS.KNOWLEDGE]: 3.0,
+        [STATS.ACTION_POWER]: 2.0,
+        [STATS.STRENGTH]: 1.0
+    },
+    'divine_judgment': { // 神の裁き (UR)
+        [STATS.KNOWLEDGE]: 4.0,
+        [STATS.ACTION_POWER]: 3.0,
+        [STATS.PERSISTENCE]: 2.0
     },
     
     // Support Cards (provide various bonuses)
-    'support_card_1': {
-        [STATS.STAMINA]: 1.0,
-        [STATS.PERSISTENCE]: 1.0
+    'health_potion': { // 体力回復薬
+        [STATS.STAMINA]: 1.0
     },
-    'support_card_2': {
-        [STATS.ACTION_POWER]: 1.0,
-        [STATS.STRENGTH]: 0.5
+    'strength_boost': { // 力の薬 (R)
+        [STATS.STRENGTH]: 1.5,
+        [STATS.ACTION_POWER]: 0.5
     },
-    
-    // Legendary Cards (provide significant bonuses)
-    'legendary_card_1': {
-        [STATS.STRENGTH]: 3.0,
+    'lucky_charm': { // 幸運のお守り (SR)
+        [STATS.ACTION_POWER]: 2.0,
+        [STATS.PERSISTENCE]: 1.5
+    },
+    'divine_blessing': { // 神の祝福 (UR)
+        [STATS.STRENGTH]: 2.0,
         [STATS.KNOWLEDGE]: 2.0,
         [STATS.STAMINA]: 2.0,
+        [STATS.ACTION_POWER]: 2.0,
+        [STATS.PERSISTENCE]: 2.0
+    },
+    
+    // Destiny Cards (provide special bonuses)
+    'destiny_card': { // 運命カード (R)
         [STATS.ACTION_POWER]: 1.5,
-        [STATS.PERSISTENCE]: 1.5
+        [STATS.PERSISTENCE]: 1.0
+    },
+    'rare_destiny': { // 希少な運命 (SR)
+        [STATS.STRENGTH]: 2.0,
+        [STATS.KNOWLEDGE]: 2.0,
+        [STATS.ACTION_POWER]: 1.5
+    },
+    'legendary_destiny': { // 伝説の運命 (UR)
+        [STATS.STRENGTH]: 3.0,
+        [STATS.KNOWLEDGE]: 3.0,
+        [STATS.STAMINA]: 2.0,
+        [STATS.ACTION_POWER]: 2.0,
+        [STATS.PERSISTENCE]: 2.0
     }
 };
 

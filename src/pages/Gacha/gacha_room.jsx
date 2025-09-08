@@ -12,7 +12,7 @@ import battle from '../../assets/battle.png';
 import clan from '../../assets/clan.png';
 import once_pull from '../../assets/once_pull.png';
 import ten_pull from '../../assets/ten_pull.png';
-import { getRandomCard } from '../../utils/cardData';
+import { getRandomCard, getTenRandomCards } from '../../utils/cardData';
 
 export default function GachaRoom() {
     const navigate = useNavigate();
@@ -92,11 +92,8 @@ export default function GachaRoom() {
             setTicketCount(newTicketCount);
             localStorage.setItem('gachaTickets', newTicketCount.toString());
             
-            // Generate 10 random cards
-            const drawnCards = [];
-            for (let i = 0; i < 10; i++) {
-                drawnCards.push(getRandomCard());
-            }
+            // Generate 10 random cards with guaranteed SR+ on 10th pull
+            const drawnCards = getTenRandomCards();
             
             // Store the drawn cards in localStorage for gacha-ten page to display
             localStorage.setItem('drawnCards', JSON.stringify(drawnCards));

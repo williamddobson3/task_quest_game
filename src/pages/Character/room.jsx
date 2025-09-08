@@ -24,18 +24,12 @@ import filter from '../../assets/filter.png';
 import empty_item from '../../assets/empty_item.png';
 import ten_pull from '../../assets/ten_pull.png';
 import { getRandomCard } from '../../utils/cardData';
+import { getCardImageUrl, getFallbackImageUrl } from '../../utils/cardImageLoader';
 import StatDisplay from '../../components/StatDisplay';
 import { StatManager } from '../../utils/statSystem';
 import { CardStatManager } from '../../utils/cardStatSystem';
 
-// Card images
-import first_job from '../../assets/first_job.png';
-import second_job from '../../assets/second_job.png';
-import third_job from '../../assets/third_job.png';
-import fourth_job from '../../assets/fourth_job.png';
-import fifth_job from '../../assets/fifth_job.png';
-import card_two from '../../assets/card_two.png';
-import card_free from '../../assets/card_free.png';
+// Card images - now using dynamic loading from /assets/cards/
 
 
 export default function Room() {
@@ -166,7 +160,49 @@ export default function Room() {
 
     const handleItemsBoxCardClick = (card) => {
         if (card) {
-            // Store the clicked card data in localStorage for the ticket-ency page to access
+            // Special handling for job cards
+            if (card.type === 'job') {
+                // Check if there's already a job card in main_item slot
+                const currentJobCard = equippedCards.find(equippedCard => equippedCard.type === 'job');
+                
+                if (currentJobCard) {
+                    // There's already a job card in main_item, don't allow adding another
+                    alert('You already have a job card equipped! Please unequip the current job card first.');
+                    return;
+                } else {
+                    // No job card in main_item, equip this job card
+                    const updatedEquippedCards = [...equippedCards];
+                    
+                    // If there's a card in the main_item slot, move it to the end
+                    if (updatedEquippedCards.length > 0) {
+                        const mainItemCard = updatedEquippedCards.shift();
+                        updatedEquippedCards.push(mainItemCard);
+                    }
+                    
+                    // Add the job card as the first card (main_item slot)
+                    updatedEquippedCards.unshift(card);
+                    
+                    // Save to localStorage
+                    localStorage.setItem('equippedCards', JSON.stringify(updatedEquippedCards));
+                    
+                    // Save job card to character's job in localStorage
+                    localStorage.setItem('characterJob', JSON.stringify(card));
+                    
+                    // Update state
+                    setEquippedCards(updatedEquippedCards);
+                    setStatRefreshTrigger(prev => prev + 1); // Trigger stat refresh
+                    
+                    console.log('✅ Job card equipped from items-box:', card);
+                    console.log('✅ Updated equipped cards:', updatedEquippedCards);
+                    console.log('✅ Character job saved:', card);
+                    
+                    // Show success message
+                    alert(`"${card.name}" has been equipped as your job card!`);
+                    return;
+                }
+            }
+            
+            // For all cards (including job cards), show in ticket-ency page
             localStorage.setItem('selectedCard', JSON.stringify(card));
             navigate('/ticket-ency');
         }
@@ -263,36 +299,39 @@ export default function Room() {
     const getCardImage = (card) => {
         if (!card) {
             console.log('getCardImage: No card provided');
-            return null;
+            return getFallbackImageUrl();
         }
         
         console.log('getCardImage: Card data:', card);
         console.log('getCardImage: Card image key:', card.image);
         
-        const imageMap = {
-            'first_job': first_job,
-            'second_job': second_job,
-            'third_job': third_job,
-            'fourth_job': fourth_job,
-            'fifth_job': fifth_job,
-            'card_two': card_two,
-            'card_free': card_free
-        };
+        // Try to get the dynamic image URL for cards from /assets/cards/
+        const dynamicImageUrl = getCardImageUrl(card.image);
+        if (dynamicImageUrl) {
+            return dynamicImageUrl;
+        }
         
-        const selectedImage = imageMap[card.image] || card_free;
-        console.log('getCardImage: Selected image:', selectedImage);
-        
-        return selectedImage;
+        // Fallback to blank card if no image found
+        console.log('getCardImage: Using fallback image');
+        return getFallbackImageUrl();
     };
 
     // Get equipped cards for display in equipment slots (max 5 cards)
-    const displayCards = [
-        equippedCards[0] || null,
-        equippedCards[1] || null,
-        equippedCards[2] || null,
-        equippedCards[3] || null,
-        equippedCards[4] || null
-    ];
+    // Ensure job cards are always in the main_item slot (first slot)
+    const getDisplayCards = () => {
+        const jobCard = equippedCards.find(card => card.type === 'job');
+        const nonJobCards = equippedCards.filter(card => card.type !== 'job');
+        
+        return [
+            jobCard || null,           // main_item slot - always job card if available
+            nonJobCards[0] || null,    // first_item slot
+            nonJobCards[1] || null,    // second_item slot
+            nonJobCards[2] || null,    // third_item slot
+            nonJobCards[3] || null     // fourth_item slot
+        ];
+    };
+    
+    const displayCards = getDisplayCards();
 
     return (
         <div
