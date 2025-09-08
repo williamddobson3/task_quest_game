@@ -12,6 +12,7 @@ import complete from '../../assets/complete.png';
 import delete_task from '../../assets/delete.png';
 import archieve from '../../assets/archieve.png';
 import back from '../../assets/back.png';
+import { StatManager, getTaskCategory, STAT_IMPROVEMENTS } from '../../utils/statSystem';
 
 
 export default function TaskModify() {
@@ -66,6 +67,33 @@ export default function TaskModify() {
                 archivedAt: new Date().toISOString()
             };
             localStorage.setItem(taskType, JSON.stringify(archivedTaskData));
+            
+            // Improve stats based on task category
+            const taskCategory = getTaskCategory(taskData);
+            console.log('Task data:', taskData);
+            console.log('Task category:', taskCategory);
+            console.log('Available improvements:', STAT_IMPROVEMENTS);
+            const newStats = StatManager.improveStats(taskCategory);
+            
+            // Check for awakening
+            const hasAwakened = StatManager.checkAwakening();
+            
+            // Show stat improvement notification
+            const improvements = STAT_IMPROVEMENTS[taskCategory];
+            if (improvements) {
+                const improvementText = Object.keys(improvements).map(stat => {
+                    const statName = StatManager.getStatDisplayName(stat);
+                    const improvement = improvements[stat];
+                    return `${statName} +${improvement.toFixed(1)}`;
+                }).join(', ');
+                
+                alert(`タスクをアーカイブしました！\nステータス向上: ${improvementText}`);
+                
+                if (hasAwakened) {
+                    alert('🎉 キャラクターが覚醒しました！\n最大ステータスが120に拡張されました！');
+                }
+            }
+            console.log('taskData', taskData);
             navigate('/home');
         }
     };
@@ -88,6 +116,14 @@ export default function TaskModify() {
                         <p>の入力</p>
                     </div>
                 </div>
+                {/* Archive Status Indicator */}
+                {taskData?.archived && (
+                    <div className='w-full flex justify-center items-center mb-4'>
+                        <div className='bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-2 rounded-lg'>
+                            <p className='text-sm font-bold'>📁 アーカイブ済みタスク</p>
+                        </div>
+                    </div>
+                )}
                 <div className='w-9/10 lg:w-7/10 xl:w-full h-auto flex flex-col justify-center items-center relative xl:mr-60 gap-3'>
                     <div className='w-full h-auto flex justify-center items-center'>
                         <img src={task_input_panel} alt="" className='w-full h-auto' />
@@ -100,32 +136,87 @@ export default function TaskModify() {
                                 id="task" 
                                 value={taskText}
                                 onChange={(e) => setTaskText(e.target.value)}
-                                className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-20 bg-transparent border-none outline-none resize-none text-center text-lg' 
-                                placeholder='タスクを入力してください'
+                                disabled={taskData?.archived}
+                                className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-20 bg-transparent border-none outline-none resize-none text-center text-lg ${
+                                    taskData?.archived ? 'opacity-50 cursor-not-allowed' : ''
+                                }`}
+                                placeholder={taskData?.archived ? 'アーカイブ済みタスク' : 'タスクを入力してください'}
                             />
                         </div>
                         <div className='w-full h-auto flex flex-col justify-center items-center gap-2'>
                             <div className='w-1/4 h-auto flex justify-center items-center gap-2'>
-                                <img src={work} alt="" className={`cursor-pointer hover:opacity-80 ${selectedType === 'work' ? 'opacity-100' : 'opacity-50'}`} onClick={() => handleTypeClick('work')} />
-                                <img src={study} alt="" className={`cursor-pointer hover:opacity-80 ${selectedType === 'study' ? 'opacity-100' : 'opacity-50'}`} onClick={() => handleTypeClick('study')} />
-                                <img src={life} alt="" className={`cursor-pointer hover:opacity-80 ${selectedType === 'life' ? 'opacity-100' : 'opacity-50'}`} onClick={() => handleTypeClick('life')} />
+                                <img 
+                                    src={work} 
+                                    alt="" 
+                                    className={`${taskData?.archived ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-80'} ${selectedType === 'work' ? 'opacity-100' : 'opacity-50'}`} 
+                                    onClick={taskData?.archived ? undefined : () => handleTypeClick('work')} 
+                                />
+                                <img 
+                                    src={study} 
+                                    alt="" 
+                                    className={`${taskData?.archived ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-80'} ${selectedType === 'study' ? 'opacity-100' : 'opacity-50'}`} 
+                                    onClick={taskData?.archived ? undefined : () => handleTypeClick('study')} 
+                                />
+                                <img 
+                                    src={life} 
+                                    alt="" 
+                                    className={`${taskData?.archived ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-80'} ${selectedType === 'life' ? 'opacity-100' : 'opacity-50'}`} 
+                                    onClick={taskData?.archived ? undefined : () => handleTypeClick('life')} 
+                                />
                             </div>
                             <div className='w-1/4 h-auto flex justify-center items-center gap-2'>
-                                <img src={health} alt="" className={`cursor-pointer hover:opacity-80 ${selectedType === 'health' ? 'opacity-100' : 'opacity-50'}`} onClick={() => handleTypeClick('health')} />
-                                <img src={socializing} alt="" className={`cursor-pointer hover:opacity-80 ${selectedType === 'socializing' ? 'opacity-100' : 'opacity-50'}`} onClick={() => handleTypeClick('socializing')} />
+                                <img 
+                                    src={health} 
+                                    alt="" 
+                                    className={`${taskData?.archived ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-80'} ${selectedType === 'health' ? 'opacity-100' : 'opacity-50'}`} 
+                                    onClick={taskData?.archived ? undefined : () => handleTypeClick('health')} 
+                                />
+                                <img 
+                                    src={socializing} 
+                                    alt="" 
+                                    className={`${taskData?.archived ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-80'} ${selectedType === 'socializing' ? 'opacity-100' : 'opacity-50'}`} 
+                                    onClick={taskData?.archived ? undefined : () => handleTypeClick('socializing')} 
+                                />
                             </div>
                         </div>
                     </div>
                     <div className='flex flex-col justify-center items-center w-1/2 xl:absolute bottom-0 right-[-400px] gap-2 xl:gap-4 '>
                         <div className='justify-center items-center gap-2 hidden xl:flex'>
-                            <img src={archieve} alt="" className='w-[150px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' onClick={handleArchiveClick} />
+                            <img 
+                                src={archieve} 
+                                alt="" 
+                                className={`w-[150px] lg:w-[200px] h-auto ${
+                                    taskData?.archived 
+                                        ? 'cursor-not-allowed opacity-50' 
+                                        : 'cursor-pointer hover:opacity-80'
+                                }`} 
+                                onClick={taskData?.archived ? undefined : handleArchiveClick} 
+                            />
                         </div>
                         <div className='flex justify-center items-center gap-2 xl:flex-col xl:gap-4'>
-                            <img src={complete} alt="" className='w-[150px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' onClick={handleCompleteClick} />
+                            <img 
+                                src={complete} 
+                                alt="" 
+                                className={`w-[150px] lg:w-[200px] h-auto ${
+                                    taskData?.archived 
+                                        ? 'cursor-not-allowed opacity-50' 
+                                        : 'cursor-pointer hover:opacity-80'
+                                }`} 
+                                onClick={taskData?.archived ? undefined : handleCompleteClick} 
+                            />
                             <img src={delete_task} alt="" className='w-[150px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' onClick={handleDeleteClick} />
                         </div>
                         <div className='flex justify-center items-center gap-2 xl:hidden'>
-                            <img src={archieve} alt="" className='w-[150px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80' onClick={handleArchiveClick} />
+                            <img 
+                                src={archieve} 
+                                alt="" 
+                                className={`w-[150px] lg:w-[200px] h-auto ${
+                                    taskData?.archived 
+                                        ? 'cursor-not-allowed opacity-50' 
+                                        : 'cursor-pointer hover:opacity-80'
+                                }`} 
+                                onClick={taskData?.archived ? undefined : handleArchiveClick} 
+                            />
                         </div>
 
                     </div>

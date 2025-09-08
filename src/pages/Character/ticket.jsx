@@ -195,7 +195,7 @@ export default function Ticket() {
         <div className='w-auto h-auto flex justify-center items-center hidden xl:block absolute bottom-[300px] right-[350px]'>
           <img src={possession} alt="possession" className='' />
         </div>
-        <div className='w-full h-auto flex justify-center items-center gap-4 mt-5 xl:absolute xl:bottom-[200px] xl:right-[-225px]'>
+        <div className='w-full h-auto flex justify-center items-center gap-4 mt-5 xl:absolute xl:bottom-[200px] xl:right-[-225px] z-[1000000]'>
           <img 
             src={remove} 
             alt="" 

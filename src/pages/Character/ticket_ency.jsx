@@ -153,7 +153,7 @@ export default function Ticket() {
           <img 
             src={use} 
             alt="" 
-            className='w-[150px] cursor-pointer hover:opacity-80' 
+            className='w-[150px] cursor-pointer hover:opacity-80 z-[1000000]' 
             onClick={handleUseClick}
           />
         </div>

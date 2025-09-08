@@ -4,6 +4,7 @@ import login_background_iphone from '../../assets/background_iphone.png';
 import task_quest from '../../assets/task_quest.png';
 import frame from '../../assets/frame.png';
 import complete from '../../assets/complete.png';
+import { StatManager } from '../../utils/statSystem';
 
 export default function LoginForm() {
   const [userName, setUserName] = useState('');
@@ -25,7 +26,8 @@ export default function LoginForm() {
       // User already exists, go to home
       navigate('/home');
     } else {
-      // New user, go to tutorial
+      // New user, initialize stats and go to tutorial
+      StatManager.initializeStats('scholar'); // Default to scholar job
       navigate('/first-tutorial');
     }
   };

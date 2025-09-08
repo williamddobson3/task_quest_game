@@ -24,6 +24,9 @@ import filter from '../../assets/filter.png';
 import empty_item from '../../assets/empty_item.png';
 import ten_pull from '../../assets/ten_pull.png';
 import { getRandomCard } from '../../utils/cardData';
+import StatDisplay from '../../components/StatDisplay';
+import { StatManager } from '../../utils/statSystem';
+import { CardStatManager } from '../../utils/cardStatSystem';
 
 // Card images
 import first_job from '../../assets/first_job.png';
@@ -41,6 +44,7 @@ export default function Room() {
     const [pendingCard, setPendingCard] = useState(null);
     const [equippedCards, setEquippedCards] = useState([]);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [statRefreshTrigger, setStatRefreshTrigger] = useState(0);
 
     useEffect(() => {
         // Load collected cards from localStorage
@@ -223,6 +227,19 @@ export default function Room() {
         }
     };
 
+    // Test function for stat growth (for development/testing)
+    const handleTestStatGrowth = () => {
+        const testStats = StatManager.improveStats('study');
+        alert('Test stat growth applied! Check the stat display.');
+        // Force re-render of stat display
+        setStatRefreshTrigger(prev => prev + 1);
+    };
+
+    // Function to refresh stats display
+    const refreshStatsDisplay = () => {
+        setStatRefreshTrigger(prev => prev + 1);
+    };
+
     // Function to get the correct card image based on card data
     const getCardImage = (card) => {
         if (!card) {
@@ -299,6 +316,17 @@ export default function Room() {
                     <div className='w-full h-[250px] flex justify-end items-end xl:pl-[200px] relative pr-5 lg:pr-50 lg:mt-30 xl:mt-0 xl:pr-120'>
                         <div className='w-[250px] lg:w-[600px] xl:w-[500px] h-auto absolute lg:top-[-380px] xl:top-[-200px] left-0 xl:left-20'>
                             <img src={hero_man} alt="hero_man" className='w-full h-auto'/>
+                        </div>
+                        {/* Stat Display */}
+                        <div className='absolute lg:top-[-200px] xl:top-[-50px] right-0 xl:right-20 bg-white bg-opacity-90 rounded-lg p-4 shadow-lg'>
+                            <StatDisplay refreshTrigger={statRefreshTrigger} />
+                            {/* Test button for development */}
+                            <button 
+                                onClick={handleTestStatGrowth}
+                                className='mt-2 px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600'
+                            >
+                                Test Stat Growth
+                            </button>
                         </div>
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto xl:mb-50 relative'>
                             <img src={main_item} alt="main_item" className='w-full h-auto'/>

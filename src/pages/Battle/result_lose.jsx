@@ -5,8 +5,7 @@ import battle_board from '../../assets/battle_board.png';
 import chief from '../../assets/chief.png';
 import backward from '../../assets/backward.png';
 
-
-export default function ResultWin() {
+export default function ResultLose() {
     const navigate = useNavigate();
 
     const handleBackwardClick = () => {
@@ -29,11 +28,11 @@ export default function ResultWin() {
                         <img src={battle_board} alt=""  className="w-full h-auto" />
                     </div>
                     <div className='flex flex-col justify-center items-center text-center text-[20px] lg:text-[40px] xl:text-[30px] xl:text-[20px] absolute'>
-                        <p>過去の自分を超えた！</p>
-                        <p>ガチャ券×3獲得！</p>
+                        <p>まだまだ成長段階だ！</p>
+                        <p>ガチャ券×1獲得！</p>
                     </div>
                 </div>
-                <div className="w-[250px] lg:w-[400px] xl:w-[300px] h-auto flex justify-center items-center pt-10 z-[1000000]">
+                <div className="w-[250px] lg:w-[400px] xl:w-[300px] h-auto flex justify-center items-center pt-10 z-[100000]">
                     <img 
                         src={backward} 
                         alt="" 

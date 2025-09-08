@@ -6,7 +6,7 @@ import { TaskInput, TaskModify, TaskComplete, TaskProgress, TaskFail } from './p
 import { Room, Ticket, TicketEncy, TicketEmpty, TicketFilter, AwakeCharacter, ChracterTutorial, ChracterSelect, ChracterSelectTutorial } from './pages/Character';
 import { GachaRoom, GachaOne, GachaTen, GachaLack } from './pages/Gacha';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { BattleMain, Battle, ResultWin } from './pages/Battle';
+import { BattleMain, Battle, ResultWin, BattleMonday, ResultLose } from './pages/Battle';
 import { ClainMain, PartSelection, CreateSelection, PartCategory, Sort, ClanDescription } from './pages/Clain';
 import { MainMember, ClanLeader, MemberDetail, QuitMember, Dissolve, Explusion } from './pages/ClanMember';
 import { First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Nineth, Tenth, Eleventh } from './pages/Tutorial';
@@ -46,8 +46,10 @@ function App() {
         <Route path='/gacha-one' element={<GachaOne />} />
         <Route path='/gacha-ten' element={<GachaTen />} />
         <Route path='/battle-main' element={<BattleMain />} />
+        <Route path='/battle-monday' element={<BattleMonday />} />
         <Route path='/battle' element={<Battle />} />
         <Route path='/result-win' element={<ResultWin />} />
+        <Route path='/result-lose' element={<ResultLose />} />
         <Route path='/clain-main' element={<ClainMain />} />
         <Route path='/part-selection' element={<PartSelection />} />
         <Route path='/create-selection' element={<CreateSelection />} />
