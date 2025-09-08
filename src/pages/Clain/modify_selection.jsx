@@ -91,6 +91,11 @@ export default function ModifySelection() {
     navigate('/clan-leader');
   };
 
+  // Handle quit modify button
+  const handleQuitModifyClick = () => {
+    navigate('/quit-create');
+  };
+
   // Handle form submission (modify existing clan)
   const handleModifyClan = () => {
     // Validate required fields
@@ -276,7 +281,7 @@ export default function ModifySelection() {
               src={quit_modify} 
               alt="" 
               className='w-1/2 h-auto cursor-pointer hover:opacity-80'
-              onClick={handleBackClick}
+              onClick={handleQuitModifyClick}
             />
           </div>
         </div>

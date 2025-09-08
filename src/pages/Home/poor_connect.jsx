@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Main from './main';
 import poor_connect from '../../assets/poor_connect.png';
 
 export default function PoorConnect() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleOnline = () => {
+      // When network status changes from offline to online
+      navigate('/awake');
+      
+      // After 2 seconds, redirect to home
+      setTimeout(() => {
+        navigate('/home');
+      }, 2000);
+    };
+
+    // Add event listener for online status
+    window.addEventListener('online', handleOnline);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('online', handleOnline);
+    };
+  }, [navigate]);
+
   return (
     <div className="w-full h-screen flex justify-center items-center ">
       <div className="w-full h-full flex justify-center items-center z-[-1] ">

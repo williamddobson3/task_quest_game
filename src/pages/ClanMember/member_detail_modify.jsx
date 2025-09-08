@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Main from '../Home/main';
 import muscle_type from '../../assets/muscle_type.png';
 import member from '../../assets/member.png';
 import process from '../../assets/process.png';
-import clan_mem from '../../assets/clan_board.png';
+import clan_mem from '../../assets/clan_mem.png';
 import quit from '../../assets/quit.png';
 import login_background_iphone from '../../assets/background_iphone.png';
 import imgear from '../../assets/imgear.png';
 import one from '../../assets/one.png';
 import alarm from '../../assets/alarm.png';
 import gacha from '../../assets/gacha.png';
+import task_not from '../../assets/task_not.png';
+import gear from '../../assets/gear.png';
+import hero_man from '../../assets/hero_man.png';
 import home from '../../assets/home.png';
 import character from '../../assets/character.png';
 import ticket from '../../assets/ticket.png';
 import battle from '../../assets/battle.png';
 import clain from '../../assets/clan.png';
+import name_job from '../../assets/name_job.png';
+import star from '../../assets/star.png';
 import serious_type from '../../assets/serious_type.png';
 import self_type from '../../assets/self_type.png';
 import task_type from '../../assets/task_type.png';
 import easy_type from '../../assets/easy_type.png';
 import study_intensive from '../../assets/study_intensive.png';
+import back from '../../assets/back.png';
+import frame from '../../assets/frame.png';
+import delete_member from '../../assets/delete_member.png';
+import ModifySelection from '../Clain/modify_selection';
 
 
-export default function MainMember() {
+export default function MemberDetailModify() {
   const navigate = useNavigate();
   const [clan, setClan] = useState(null);
   const [userName, setUserName] = useState('');
@@ -37,26 +47,13 @@ export default function MainMember() {
     '筋トレ型': muscle_type
   };
 
-  // Activity level names
-  const activityLevelNames = {
-    'high': '高',
-    'medium': '中',
-    'low': '低'
-  };
-
-  // Join method names
-  const joinMethodNames = {
-    'free': '自由参加制',
-    'approval': '承認制'
-  };
-
   useEffect(() => {
     // Load user clan and username
     const loadClanData = () => {
       try {
         const userClan = localStorage.getItem('userClan');
         const userName = localStorage.getItem('userName') || 'Player';
-        
+
         if (userClan) {
           const clanData = JSON.parse(userClan);
           setClan(clanData);
@@ -73,69 +70,45 @@ export default function MainMember() {
     loadClanData();
   }, [navigate]);
 
-  // Handle quit clan (redirect to quit-member page)
-  const handleQuitClan = () => {
-    navigate('/quit-member');
-  };
-
   // Handle navigation
   const handleHomeClick = () => navigate('/home');
   const handleCharacterClick = () => navigate('/character-room');
   const handleTicketClick = () => navigate('/gacha-room');
   const handleBattleClick = () => navigate('/battle-main');
-  const handleClanClick = () => navigate('/clan-member'); // Stay on same page
+  const handleClanClick = () => {
+    const userClan = localStorage.getItem('userClan');
+    if (userClan) {
+      const clanData = JSON.parse(userClan);
+      const currentUser = localStorage.getItem('userName') || 'Player';
+
+      if (clanData.leaderId === currentUser) {
+        navigate('/clan-leader');
+      } else {
+        navigate('/clan-member');
+      }
+    } else {
+      navigate('/clain-main');
+    }
+  };
   const handleGearClick = () => navigate('/setting');
   const handleOneClick = () => {
     const currentTickets = parseInt(localStorage.getItem('gachaTickets') || '0');
     localStorage.setItem('gachaTickets', (currentTickets + 1).toString());
   };
+  const handleBackClick = () => {
+    const userClan = localStorage.getItem('userClan');
+    if (userClan) {
+      const clanData = JSON.parse(userClan);
+      const currentUser = localStorage.getItem('userName') || 'Player';
 
-  const handleMemberClick = () => {
-    navigate('/member-detail');
-  };
-
-  const handleProcessClick = () => {
-    // Count total tasks from all clan members
-    const totalTasks = countClanMemberTasks();
-    const today = new Date().getDay(); // 0 = Sunday, 6 = Saturday
-    
-    if (totalTasks < 75) {
-      if (today === 6) { // Saturday
-        navigate('/task-fail');
+      if (clanData.leaderId === currentUser) {
+        navigate('/clan-leader');
       } else {
-        navigate('/task-progress');
+        navigate('/clan-member');
       }
     } else {
-      navigate('/task-archieve');
+      navigate('/clain-main');
     }
-  };
-
-  // Function to count total tasks from all clan members
-  const countClanMemberTasks = () => {
-    if (!clan || !clan.members) return 0;
-    
-    let totalTasks = 0;
-    
-    // Count tasks for each member
-    clan.members.forEach(memberName => {
-      // Check for archived tasks (taskA, taskB, taskC)
-      ['taskA', 'taskB', 'taskC'].forEach(taskType => {
-        const taskKey = `${memberName}_${taskType}`;
-        const taskData = localStorage.getItem(taskKey);
-        if (taskData) {
-          try {
-            const parsedTask = JSON.parse(taskData);
-            if (parsedTask.archived) {
-              totalTasks++;
-            }
-          } catch (error) {
-            console.error('Error parsing task data:', error);
-          }
-        }
-      });
-    });
-    
-    return totalTasks;
   };
 
   if (!clan) {
@@ -148,7 +121,8 @@ export default function MainMember() {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className='w-full h-full flex justify-center items-center'>
+     
+      <div className='w-full h-full flex justify-center items-center absolute '>
         <div
           className="w-full h-screen lg:bg-[url('/src/assets/background_mac.png')] bg-cover bg-center"
           style={{
@@ -156,7 +130,15 @@ export default function MainMember() {
           }}
         >
           <div className='w-full h-full flex flex-col justify-start items-center pt-20 lg:pt-32 xl:pt-16'>
-            <header className='w-full h-1/10 flex justify-between items-center absolute top-0 xl:top-10 xl:px-5'>
+            <div className='w-vw h-full flex justify-start items-start absolute top-0 left-0 z-[100000]'>
+              <img
+                src={back}
+                alt=""
+                className='w-[100px] lg:w-[200px] h-auto cursor-pointer hover:opacity-80'
+                onClick={handleBackClick}
+              />
+            </div>
+            <header className='w-full h-1/10 flex justify-between items-center absolute top-0 xl:top-10 xl:px-5 opacity-0'>
               <div className=' h-full flex justify-start items-center'>
                 <div className='flex flex-col justify-center items-center text-center'>
                   <p className='text-2xl lg:text-7xl xl:text-6xl font-bold text-[#dbab1e] [-webkit-text-stroke:2px_#a17b0b]'>{userName}</p>
@@ -180,54 +162,49 @@ export default function MainMember() {
             </header>
             <main className='w-full flex flex-col justify-start items-center'>
               <div className="w-full h-full flex flex-col justify-center items-center absolute top-0 left-0 gap-5">
-                <div className="text-[35px] lg:text-[90px] font-bold">
+                <div className="text-[35px] lg:text-[90px] font-bold  opacity-0">
                   <p>{clan.name}</p>
                 </div>
-                <div className="w-auto h-auto flex flex-col xl:flex-row justify-center items-center xl:gap-40">
+                <div className="w-auto h-auto flex flex-col xl:flex-row justify-center items-center xl:gap-40 gap-5">
                   <div className='w-[200px] lg:w-[900px] xl:w-[300px] h-auto flex flex-col lg:flex-row xl:flex-col justify-center items-center gap-5'>
                     <div className="w-[300px] lg:w-[900px] xl:w-[300px] h-auto flex xl:flex-col justify-center items-center lg:gap-10">
-                      <img src={categoryMapping[clan.category] || muscle_type} alt="" className='w-1/2 lg:w-[300px] h-auto training' />
-                      <img src={member} alt="" className='w-1/2 h-auto lg:w-[300px] cursor-pointer hover:opacity-80' onClick={handleMemberClick} />
+                      <img src={categoryMapping[clan.category] || muscle_type} alt="" className='w-1/2 lg:w-[300px] h-auto opacity-0' />
+                      <img src={member} alt="" className='w-1/2 h-auto lg:w-[300px] lg:mr-150 xl:mr-0 xl:ml-400 xl:mb-80' />
                     </div>
-                    <div className='w-[150px] lg:w-[400px] xl:w-[300px] h-auto flex justify-center items-center cursor-pointer hover:opacity-80' onClick={handleProcessClick}>
+                    <div className='w-[150px] lg:w-[400px] xl:w-[300px] h-auto flex justify-center items-center  opacity-0'>
                       <img src={process} alt="" />
                     </div>
                   </div>
-                  <div className='w-[300px] lg:w-[900px] xl:w-[500px]  h-auto flex justify-center items-center relative '>
-                    <div className='w-full h-auto flex justify-center items-center'>
-                      <img src={clan_mem} alt="" className='w-full h-auto' />
+                  <div className='w-[300px] lg:w-[900px] xl:w-[500px]  h-auto flex justify-center items-start relative '>
+                    <div className='absolute top-0 lg:top-[-10px] left-[-10px] lg:left-[50px] xl:left-[30px] w-[50px] lg:w-[170px] xl:w-[70px] '>
+                      <img src={star} alt="" />
                     </div>
-                    <div className="absolute bottom-7 lg:bottom-15 xl:bottom-10 right-7 lg:right-15 xl:right-10 w-[70px] lg:w-[200px] xl:w-[130px] cursor-pointer hover:opacity-80 z-[10000000]" onClick={handleQuitClan}>
-                      <img src={quit} alt="" />
-                    </div>
-                    {/* Clan information overlay */}
-                    <div className="absolute inset-0 flex flex-col justify-center items-center p-4">
-                      <div className="text-center space-y-2">
-                        <div className="text-[18px] lg:text-[45px] xl:text-[25px] font-bold">
-                          <p>カテゴリ: {clan.category}</p>
-                          <p>活動頻度: {activityLevelNames[clan.activityLevel]}</p>
-                          <p>参加方式: {joinMethodNames[clan.joinMethod]}</p>
-                          <p>メンバー数: {clan.members.length}/{clan.maxMembers}人</p>
-                          <p>リーダー: {clan.leaderId}</p>
+                    <div className='w-[200px] lg:w-[500px] xl:w-[250px] space-y-2'>
+                      {clan.members.map((memberName, index) => (
+                        <div key={index} className="relative flex">
+                          <img src={frame} alt="" className="w-full h-auto" />
+                          <div className="absolute inset-0 flex items-center justify-center ">
+                            <div className="text-center flex justify-center items-center">
+                              <p className="text-[20px] lg:text-[46px] xl:text-[30px] font-bold">{memberName}</p>
+                              <p className="text-[20px] lg:text-[46px] xl:text-[30px] font-bold">+</p>
+                              <p className="text-[20px] lg:text-[46px] xl:text-[30px]">
+                                {memberName === clan.leaderId ? 'リーダー' : 'メンバー'}
+                              </p>
+                            </div>
+                          </div>
+                          {memberName !== clan.leaderId && (
+                            <div className=' w-[70px] lg:w-[200px] xl:w-[130px] h-[50px] cursor-pointer hover:opacity-80 z-[1000000] absolute right-[-80px] lg:right-[-220px] xl:right-[-180px] top-[15px]  ' >
+                              <img src={delete_member} alt="" />
+                            </div>
+                          )}
                         </div>
-                        {clan.description && (
-                          <div className="text-[18px] lg:text-[45px] xl:text-[25px] mt-2 max-w-[200px] lg:max-w-[600px] xl:max-w-[400px]">
-                            <p className="font-bold mb-1">説明:</p>
-                            <p className="text-left">{clan.description}</p>
-                          </div>
-                        )}
-                        {clan.discordUrl && (
-                          <div className="text-[18px] lg:text-[45px] xl:text-[25px] mt-1">
-                            <p className="font-bold">Discord: {clan.discordUrl}</p>
-                          </div>
-                        )}
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
             </main>
-            <footer className='w-full h-1/10 gap-3 lg:gap-1 flex justify-between xl:justify-end items-center px-3 absolute bottom-5'>
+            <footer className='w-full h-1/10 gap-3 lg:gap-1 flex justify-between xl:justify-end items-center px-3 absolute bottom-5 opacity-0'>
               <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto cursor-pointer hover:opacity-80' onClick={handleHomeClick}>
                 <img src={home} alt="home" className='w-full h-auto' />
               </div>

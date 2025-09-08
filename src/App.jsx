@@ -2,13 +2,13 @@ import './App.css';
 import Login from './pages/Login';
 import LoginForm from './pages/Login/loginform';
 import { Main, Bonus, BonusSun, Card, CardSun, LotteryNot, DiscordNot, TaskAComplete, TaskBComplete, TaskCComplete, GachaBuy, GachaSuccess, GachaFail, Setting, ResetSetting, PoorConnect, Awake } from './pages/Home';
-import { TaskInput, TaskModify, TaskComplete, TaskProgress, TaskFail } from './pages/Task';
+import { TaskInput, TaskModify, TaskComplete, TaskProgress, TaskFail, TaskArchieve } from './pages/Task';
 import { Room, Ticket, TicketEncy, TicketEmpty, TicketFilter, AwakeCharacter, ChracterTutorial, ChracterSelect, ChracterSelectTutorial } from './pages/Character';
 import { GachaRoom, GachaOne, GachaTen, GachaLack } from './pages/Gacha';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { BattleMain, Battle, ResultWin, BattleMonday, ResultLose } from './pages/Battle';
-import { ClainMain, PartSelection, CreateSelection, PartCategory, Sort, ClanDescription, ModifySelection } from './pages/Clain';
-import { MainMember, ClanLeader, MemberDetail, QuitMember, Dissolve, Explusion } from './pages/ClanMember';
+import { ClainMain, PartSelection, CreateSelection, PartCategory, Sort, ClanDescription, ModifySelection, QuitCreate } from './pages/Clain';
+import { MainMember, ClanLeader, MemberDetail, QuitMember, Dissolve, Explusion, MemberDetailModify } from './pages/ClanMember';
 import { First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Nineth, Tenth, Eleventh } from './pages/Tutorial';
 import { JobCards, CardDesc } from './pages/Cards';
 
@@ -85,6 +85,9 @@ function App() {
         <Route path='/character-select-tutorial' element={<ChracterSelectTutorial />} />
         <Route path='/gacha-lack' element={<GachaLack />} />
         <Route path='/modify-selection' element={<ModifySelection />} />
+        <Route path='/member-detail-modify' element={<MemberDetailModify />} />
+        <Route path='/quit-create' element={<QuitCreate />} />
+        <Route path='/task-archieve' element={<TaskArchieve />} />
       </Routes>
     </Router>
   )

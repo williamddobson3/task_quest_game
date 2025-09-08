@@ -16,6 +16,12 @@ export default function LoginForm() {
       return;
     }
 
+    // Check if device is offline
+    if (!navigator.onLine) {
+      navigate('/poor-connect');
+      return;
+    }
+
     // Check if user already has a username stored (returning user)
     const existingUser = localStorage.getItem('userName');
     

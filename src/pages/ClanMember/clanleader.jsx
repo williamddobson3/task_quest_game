@@ -95,11 +95,55 @@ export default function ClanLeader() {
   };
 
   const handleMemberClick = () => {
-    navigate('/member-detail');
+    navigate('/member-detail-modify');
   };
 
   const handleSettingClick = () => {
     navigate('/modify-selection');
+  };
+
+  const handleProcessClick = () => {
+    // Count total tasks from all clan members
+    const totalTasks = countClanMemberTasks();
+    const today = new Date().getDay(); // 0 = Sunday, 6 = Saturday
+    
+    if (totalTasks < 75) {
+      if (today === 6) { // Saturday
+        navigate('/task-fail');
+      } else {
+        navigate('/task-progress');
+      }
+    } else {
+      navigate('/task-archieve');
+    }
+  };
+
+  // Function to count total tasks from all clan members
+  const countClanMemberTasks = () => {
+    if (!clan || !clan.members) return 0;
+    
+    let totalTasks = 0;
+    
+    // Count tasks for each member
+    clan.members.forEach(memberName => {
+      // Check for archived tasks (taskA, taskB, taskC)
+      ['taskA', 'taskB', 'taskC'].forEach(taskType => {
+        const taskKey = `${memberName}_${taskType}`;
+        const taskData = localStorage.getItem(taskKey);
+        if (taskData) {
+          try {
+            const parsedTask = JSON.parse(taskData);
+            if (parsedTask.archived) {
+              totalTasks++;
+            }
+          } catch (error) {
+            console.error('Error parsing task data:', error);
+          }
+        }
+      });
+    });
+    
+    return totalTasks;
   };
 
   if (!clan) {
@@ -150,10 +194,10 @@ export default function ClanLeader() {
                 <div className="w-auto h-auto flex flex-col xl:flex-row justify-center items-center xl:gap-40">
                   <div className='w-[200px] lg:w-[900px] xl:w-[300px] h-auto flex flex-col lg:flex-row xl:flex-col justify-center items-center gap-5'>
                     <div className="w-[300px] lg:w-[900px] xl:w-[300px] h-auto flex xl:flex-col justify-center items-center lg:gap-10">
-                      <img src={categoryMapping[clan.category] || muscle_type} alt="" className='w-1/2 lg:w-[300px] h-auto' />
+                      <img src={categoryMapping[clan.category] || muscle_type} alt="" className='w-1/2 lg:w-[300px] h-auto training' />
                       <img src={member} alt="" className='w-1/2 h-auto lg:w-[300px] cursor-pointer hover:opacity-80' onClick={handleMemberClick} />
                     </div>
-                    <div className='w-[150px] lg:w-[400px] xl:w-[300px] h-auto flex justify-center items-center'>
+                    <div className='w-[150px] lg:w-[400px] xl:w-[300px] h-auto flex justify-center items-center cursor-pointer hover:opacity-80' onClick={handleProcessClick}>
                       <img src={process} alt="" />
                     </div>
                   </div>

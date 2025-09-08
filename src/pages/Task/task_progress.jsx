@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import login_background_iphone from '../../assets/background_iphone.png';
 import imgear from '../../assets/imgear.png';
 import one from '../../assets/one.png';
@@ -17,6 +18,25 @@ import work_progress from '../../assets/work_progress.png';
 import back from '../../assets/back.png';
 
 export default function TaskProgress() {
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    // Return to appropriate clan page based on user role
+    const userClan = localStorage.getItem('userClan');
+    if (userClan) {
+      const clanData = JSON.parse(userClan);
+      const currentUser = localStorage.getItem('userName') || 'Player';
+      
+      if (clanData.leaderId === currentUser) {
+        navigate('/clan-leader');
+      } else {
+        navigate('/clan-member');
+      }
+    } else {
+      navigate('/clain-main');
+    }
+  };
+
   return (
     <div
       className="w-full h-screen lg:bg-[url('/src/assets/background_mac.png')] bg-cover bg-center"
@@ -26,11 +46,11 @@ export default function TaskProgress() {
     >
       <div className='w-full h-full flex flex-col justify-start items-center pt-20 lg:pt-32 xl:pt-16'>
         <main className='w-full flex flex-col justify-start items-center'>
-          <div className='w-[120px] lg:w-[180px] xl:w-[150px] h-auto flex justify-center items-center absolute top-0 left-0'>
+          <div className='w-[120px] lg:w-[180px] xl:w-[150px] h-auto flex justify-center items-center absolute top-0 left-0 cursor-pointer hover:opacity-80' onClick={handleBackClick}>
             <img src={back} alt="back" />
           </div>
           <div className='w-full flex flex-col justify-start items-end lg:pl-20 xl:pl-[160px] xl:pt-0 gap-5'>
-            <div className='text-[48px] lg:text-7xl xl:text-5xl font-bold text-white text-center mr-[50px] lg:mr-[300px] [-webkit-text-stroke:3px_brown] '>
+            <div className='text-[48px] lg:text-7xl xl:text-5xl font-bold text-white text-center mr-[50px] lg:mr-[300px] [-webkit-text-stroke:3px_brown] opacity-0 '>
               <p>クランタスク <br /> 達成!</p>
             </div>
             <div className='flex justify-center items-center w-[150px] lg:w-[300px] mr-[150px] lg:mr-[300px]  xl:mr-[700px] '>

@@ -5,3 +5,4 @@ export { default as PartCategory } from './part_category';
 export { default as Sort } from './sort';
 export { default as ClanDescription } from './clan_description';
 export { default as ModifySelection } from './modify_selection';
+export { default as QuitCreate } from './quit_create';
