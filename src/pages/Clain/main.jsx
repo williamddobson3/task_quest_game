@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import login_background_iphone from '../../assets/background_iphone.png';
 import imgear from '../../assets/imgear.png';
 import one from '../../assets/one.png';
@@ -14,6 +15,12 @@ import production from '../../assets/production.png';
 import partisipant from '../../assets/partisipant.png';
 
 export default function ClainMain() {
+    const navigate = useNavigate();
+
+    const handleProductionClick = () => {
+        navigate('/create-selection');
+    };
+
     return (
         <div
             className="w-full h-screen lg:bg-[url('/src/assets/background_mac.png')] bg-cover bg-center"
@@ -50,7 +57,12 @@ export default function ClainMain() {
                     </div>
                     <div className="w-full xl:w-auto h-auto flex flex-col justify-center items-center gap-10">
                         <div className="w-[250px] lg:w-[500px] xl:w-[400px] h-auto flex justify-center items-center">
-                            <img src={production} alt="" className='w-full h-auto' />
+                            <img 
+                                src={production} 
+                                alt="" 
+                                className='w-full h-auto cursor-pointer hover:opacity-80'
+                                onClick={handleProductionClick}
+                            />
                         </div>
                         <div className="w-[250px] lg:w-[500px] xl:w-[400px] h-auto flex justify-center items-center">
                             <img src={partisipant} alt="" className='w-full h-auto' />
