@@ -54,20 +54,36 @@ export default function GachaTen() {
 
     const handleReturnClick = () => {
         if (drawnCards.length > 0) {
-            // Add all cards to player's collection
+            // Add all cards to player's collection with quantity tracking
             const currentCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
             
-            // Add new cards (avoid duplicates)
-            const updatedCards = [...currentCards];
+            // Create a map to track card quantities
+            const cardMap = new Map();
+            
+            // Count existing cards
+            currentCards.forEach(card => {
+                const key = card.id;
+                cardMap.set(key, (cardMap.get(key) || 0) + (card.quantity || 1));
+            });
+            
+            // Add new cards and count duplicates
             drawnCards.forEach(newCard => {
-                const cardExists = updatedCards.some(card => card.id === newCard.id);
-                if (!cardExists) {
-                    updatedCards.push(newCard);
-                }
+                const key = newCard.id;
+                cardMap.set(key, (cardMap.get(key) || 0) + 1);
+            });
+            
+            // Convert back to array format with quantity
+            const updatedCards = Array.from(cardMap.entries()).map(([id, quantity]) => {
+                // Find the original card data
+                const originalCard = [...currentCards, ...drawnCards].find(card => card.id === id);
+                return {
+                    ...originalCard,
+                    quantity: Math.min(quantity, 3) // Max 3 cards per type
+                };
             });
             
             localStorage.setItem('playerCards', JSON.stringify(updatedCards));
-            console.log('10 cards added to collection:', drawnCards);
+            console.log('10 cards added to collection with quantities:', updatedCards);
             
             // Clear the drawn cards from localStorage
             localStorage.removeItem('drawnCards');

@@ -186,6 +186,9 @@ export default function Ticket() {
           <div className='absolute top-42 left-0 w-full h-full flex flex-col justify-center items-center gap-3 xl:top-[-120px] xl:pl-[350px]'>
             <div className='w-6/10 text-left text-[18px] lg:text-[30px] lg:w-4/10 lg:pt-100 xl:pt-0 xl:text-[25px] flex flex-col gap-2 lg:gap-7'>
               <p>{selectedCard.type}&nbsp;&nbsp;{selectedCard.name}&nbsp;&nbsp;&nbsp;{selectedCard.rarity}</p>
+              {selectedCard.quantity && selectedCard.quantity > 1 && (
+                <p className='text-blue-600 font-bold'>所持数: {selectedCard.quantity}枚</p>
+              )}
               <p>
                 {selectedCard.description}
               </p>

@@ -332,7 +332,7 @@ export default function Room() {
                             <img src={main_item} alt="main_item" className='w-full h-auto'/>
                             {displayCards[0] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
                                     onClick={() => handleCardClick(displayCards[0])}
                                 >
                                     <img 
@@ -340,6 +340,12 @@ export default function Room() {
                                         alt={displayCards[0].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
+                                    {/* Show quantity if more than 1 */}
+                                    {displayCards[0].quantity && displayCards[0].quantity > 1 && (
+                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
+                                            {displayCards[0].quantity}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -349,7 +355,7 @@ export default function Room() {
                             <img src={first_item} alt="first_item" className='w-full h-auto'/>
                             {displayCards[1] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
                                     onClick={() => handleCardClick(displayCards[1])}
                                 >
                                     <img 
@@ -357,6 +363,12 @@ export default function Room() {
                                         alt={displayCards[1].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
+                                    {/* Show quantity if more than 1 */}
+                                    {displayCards[1].quantity && displayCards[1].quantity > 1 && (
+                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
+                                            {displayCards[1].quantity}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -364,7 +376,7 @@ export default function Room() {
                             <img src={second_item} alt="second_item" className='w-full h-auto'/>
                             {displayCards[2] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
                                     onClick={() => handleCardClick(displayCards[2])}
                                 >
                                     <img 
@@ -372,6 +384,12 @@ export default function Room() {
                                         alt={displayCards[2].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
+                                    {/* Show quantity if more than 1 */}
+                                    {displayCards[2].quantity && displayCards[2].quantity > 1 && (
+                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
+                                            {displayCards[2].quantity}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -379,7 +397,7 @@ export default function Room() {
                             <img src={third_item} alt="third_item" className='w-full h-auto'/>
                             {displayCards[3] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
                                     onClick={() => handleCardClick(displayCards[3])}
                                 >
                                     <img 
@@ -387,6 +405,12 @@ export default function Room() {
                                         alt={displayCards[3].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
+                                    {/* Show quantity if more than 1 */}
+                                    {displayCards[3].quantity && displayCards[3].quantity > 1 && (
+                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
+                                            {displayCards[3].quantity}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -394,7 +418,7 @@ export default function Room() {
                             <img src={fourth_item} alt="fourth_item" className='w-full h-auto'/>
                             {displayCards[4] && (
                                 <div 
-                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80'
+                                    className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 relative'
                                     onClick={() => handleCardClick(displayCards[4])}
                                 >
                                     <img 
@@ -402,6 +426,12 @@ export default function Room() {
                                         alt={displayCards[4].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
+                                    {/* Show quantity if more than 1 */}
+                                    {displayCards[4].quantity && displayCards[4].quantity > 1 && (
+                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
+                                            {displayCards[4].quantity}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -440,7 +470,7 @@ export default function Room() {
                                         >
                                              {card ? (
                                                  <div 
-                                                     className='w-full h-full flex items-center justify-center cursor-pointer hover:opacity-80'
+                                                     className='w-full h-full flex items-center justify-center cursor-pointer hover:opacity-80 relative'
                                                      onClick={() => handleItemsBoxCardClick(card)}
                                                  >
                                                      <img 
@@ -448,6 +478,12 @@ export default function Room() {
                                                          alt={card.name}
                                                          className='w-full h-full object-contain'
                                                      />
+                                                     {/* Show quantity if more than 1 */}
+                                                     {card.quantity && card.quantity > 1 && (
+                                                         <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
+                                                             {card.quantity}
+                                                         </div>
+                                                     )}
                                                  </div>
                                              ) : (
                                                 <img 

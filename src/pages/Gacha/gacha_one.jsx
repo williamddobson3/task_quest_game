@@ -54,17 +54,30 @@ export default function GachaOne() {
 
     const handleReturnClick = () => {
         if (drawnCard) {
-            // Add the card to player's collection if not already added
+            // Add the card to player's collection with quantity tracking
             const currentCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
             
-            // Check if card is already in collection (avoid duplicates)
-            const cardExists = currentCards.some(card => card.id === drawnCard.id);
+            // Find existing card or add new one
+            const existingCardIndex = currentCards.findIndex(card => card.id === drawnCard.id);
             
-            if (!cardExists) {
-                const updatedCards = [...currentCards, drawnCard];
-                localStorage.setItem('playerCards', JSON.stringify(updatedCards));
-                console.log('Card added to collection:', drawnCard);
+            if (existingCardIndex >= 0) {
+                // Card exists, increment quantity (max 3)
+                const existingCard = currentCards[existingCardIndex];
+                const newQuantity = Math.min((existingCard.quantity || 1) + 1, 3);
+                currentCards[existingCardIndex] = {
+                    ...existingCard,
+                    quantity: newQuantity
+                };
+            } else {
+                // New card, add with quantity 1
+                currentCards.push({
+                    ...drawnCard,
+                    quantity: 1
+                });
             }
+            
+            localStorage.setItem('playerCards', JSON.stringify(currentCards));
+            console.log('Card added to collection with quantity:', currentCards);
             
             // Clear the drawn card from localStorage
             localStorage.removeItem('drawnCard');
