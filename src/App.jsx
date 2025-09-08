@@ -7,7 +7,7 @@ import { Room, Ticket, TicketEncy, TicketEmpty, TicketFilter, AwakeCharacter, Ch
 import { GachaRoom, GachaOne, GachaTen, GachaLack } from './pages/Gacha';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { BattleMain, Battle, ResultWin, BattleMonday, ResultLose } from './pages/Battle';
-import { ClainMain, PartSelection, CreateSelection, PartCategory, Sort, ClanDescription } from './pages/Clain';
+import { ClainMain, PartSelection, CreateSelection, PartCategory, Sort, ClanDescription, ModifySelection } from './pages/Clain';
 import { MainMember, ClanLeader, MemberDetail, QuitMember, Dissolve, Explusion } from './pages/ClanMember';
 import { First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Nineth, Tenth, Eleventh } from './pages/Tutorial';
 import { JobCards, CardDesc } from './pages/Cards';
@@ -84,6 +84,7 @@ function App() {
         <Route path='/character-tutorial' element={<ChracterTutorial />} />
         <Route path='/character-select-tutorial' element={<ChracterSelectTutorial />} />
         <Route path='/gacha-lack' element={<GachaLack />} />
+        <Route path='/modify-selection' element={<ModifySelection />} />
       </Routes>
     </Router>
   )

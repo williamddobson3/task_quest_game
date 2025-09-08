@@ -98,6 +98,10 @@ export default function ClanLeader() {
     navigate('/member-detail');
   };
 
+  const handleSettingClick = () => {
+    navigate('/modify-selection');
+  };
+
   if (!clan) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
@@ -157,9 +161,9 @@ export default function ClanLeader() {
                     <div className='w-full h-auto flex justify-center items-center'>
                       <img src={board} alt="" className='w-full h-auto' />
                     </div>
-                    <div className="absolute top-7 lg:top-15 xl:top-10 right-9 lg:right-[-40px] xl:right-10 w-[30px] lg:w-[200px] xl:w-[130px] ">
-                      <img src={gear} alt="" />
-                    </div>
+                      <div className="absolute top-7 lg:top-15 xl:top-10 right-9 lg:right-[-40px] xl:right-10 w-[30px] lg:w-[200px] xl:w-[130px] cursor-pointer hover:opacity-80 z-[1000000]" onClick={handleSettingClick}>
+                        <img src={gear} alt="" className='setting' />
+                      </div>
                     <div className="absolute bottom-10 lg:bottom-30 xl:bottom-15 right-7 lg:right-35 xl:right-15 w-[70px] lg:w-[200px] xl:w-[130px] cursor-pointer hover:opacity-80 z-[1000000]" onClick={handleQuitClan}>
                       <img src={quit} alt="" />
                     </div>
