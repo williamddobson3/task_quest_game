@@ -26,8 +26,8 @@ export default function Eleventh() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    const redirectPath = getPostTutorialRedirect();
-    navigate(redirectPath);
+    // Redirect to jobcard page for job card selection
+    navigate('/jobcard');
   };
 
   return (
