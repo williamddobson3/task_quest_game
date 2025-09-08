@@ -11,7 +11,7 @@ import character from '../../assets/character.png';
 import ticket from '../../assets/ticket.png';
 import battle from '../../assets/battle.png';
 import clan from '../../assets/clan.png';
-import score from '../../assets/score.png';
+// score image replaced with dynamic chart
 import main_item from '../../assets/main_item.png';
 import first_item from '../../assets/first_item.png';
 import second_item from '../../assets/second_item.png';
@@ -26,6 +26,7 @@ import ten_pull from '../../assets/ten_pull.png';
 import { getRandomCard } from '../../utils/cardData';
 import { getCardImageUrl, getFallbackImageUrl } from '../../utils/cardImageLoader';
 import StatDisplay from '../../components/StatDisplay';
+import PentagonChart from '../../components/PentagonChart';
 import { StatManager } from '../../utils/statSystem';
 import { CardStatManager } from '../../utils/cardStatSystem';
 
@@ -365,9 +366,8 @@ export default function Room() {
                 </header>
                 <main className='w-full flex flex-col justify-start items-center'>
                     <div className='w-full flex flex-col justify-center items-end pl-12 lg:pl-20 lg:pt-20 xl:pr-[150px] xl:pt-20'>
-                        <div className='flex justify-center items-center gap-3 relative w-[230px] lg:w-[550px] xl:w-[300px] h-auto'>
-                            <img src={score} alt="score" className='w-full h-auto'/>
-                            <p>100</p>
+                        <div className='flex justify-center items-center gap-3 relative w-[230px] lg:w-[550px] xl:w-[300px] h-[200px] lg:h-[400px] xl:h-[250px]'>
+                            <PentagonChart refreshTrigger={statRefreshTrigger} />
                         </div>
                         {/* Ten Pull Button */}
                     </div>
