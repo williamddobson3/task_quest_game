@@ -56,6 +56,22 @@ export default function Ticket() {
       return;
     }
     
+    // Remove ALL instances of the card from collected cards (item-box)
+    const collectedCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
+    const updatedCollectedCards = collectedCards.filter(card => {
+      // Remove ALL instances of the same card completely
+      const key = card.id || card.name || card.image;
+      const selectedKey = selectedCard.id || selectedCard.name || selectedCard.image;
+      
+      // If it's the same card, remove it completely (regardless of quantity)
+      return key !== selectedKey;
+    });
+    
+    // Save updated collected cards
+    localStorage.setItem('playerCards', JSON.stringify(updatedCollectedCards));
+    console.log('✅ Removed ALL instances of card from item-box:', selectedCard);
+    console.log('✅ Updated collected cards:', updatedCollectedCards);
+    
     // Special handling for job cards
     if (selectedCard.type === 'job') {
       // Check if there's already a job card equipped

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import login_background_iphone from '../../assets/background_iphone.png';
 import imgear from '../../assets/imgear.png';
 import one from '../../assets/one.png';
@@ -16,6 +16,33 @@ import character_tutorial from '../../assets/character_tutorial.png';
 import start from '../../assets/start.png';
 
 export default function Main() {
+  const [ticketCount, setTicketCount] = useState(0);
+
+  useEffect(() => {
+    // Load ticket count from localStorage
+    const savedTickets = localStorage.getItem('gachaTickets');
+    setTicketCount(savedTickets ? parseInt(savedTickets) : 0);
+  }, []);
+
+  const handleGearClick = () => {
+    // Navigate to setting page
+    console.log('Gear clicked');
+  };
+
+  const handleOneClick = () => {
+    // Give player 1 ticket
+    const currentTickets = parseInt(localStorage.getItem('gachaTickets') || '0');
+    const newTicketCount = currentTickets + 1;
+    localStorage.setItem('gachaTickets', newTicketCount.toString());
+    
+    // Update state
+    setTicketCount(newTicketCount);
+    
+    // Show success message
+    alert('You received 1 gacha ticket!');
+    
+    console.log('Tickets updated:', newTicketCount);
+  };
   return (
     <div className='w-full h-screen flex justify-center items-center'>
       <div
@@ -31,19 +58,22 @@ export default function Main() {
                 <p className='text-2xl lg:text-7xl xl:text-6xl font-bold text-[#dbab1e] [-webkit-text-stroke:2px_#a17b0b]'>Player</p>
                 <p className='text-sm lg:text-4xl xl:text-3xl font-bold text-[#dbab1e] [-webkit-text-stroke:1px_#a17b0b]'>ID: 123456789</p>
               </div>
-              <div className='max-w-8 lg:max-w-20 xl:max-w-16 w-full h-auto'>
-                <img src={imgear} alt="imgear" />
-              </div>
+                <div className='max-w-8 lg:max-w-20 xl:max-w-16 w-full h-auto'>
+                  <img src={imgear} alt="imgear" className='cursor-pointer hover:opacity-80' onClick={handleGearClick} />
+                </div>
             </div>
             <div className=' h-full flex justify-center items-center gap-3'>
               <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
-                <img src={one} alt="one" className='w-full' />
+                <img src={one} alt="one" className='w-full cursor-pointer hover:opacity-80' onClick={handleOneClick} />
               </div>
               <div className='max-w-10 lg:max-w-16 xl:max-w-12 w-full h-auto'>
                 <img src={alarm} alt="alarm" className='w-full' />
               </div>
-              <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
+              <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto relative'>
                 <img src={gacha} alt="gacha" className='w-full' />
+                <div className='absolute top-1/2 left-3/4 transform -translate-x-1/2 -translate-y-1/2 font-bold text-lg lg:text-4xl xl:text-2xl text-center'>
+                  {ticketCount}
+                </div>
               </div>
             </div>
           </header>

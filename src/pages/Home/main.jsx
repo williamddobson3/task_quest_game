@@ -113,15 +113,13 @@ export default function Main() {
                         <div className='max-w-10 lg:max-w-16 xl:max-w-12 w-full h-auto'>
                             <img src={alarm} alt="alarm" className='w-full' />
                         </div>
-                        <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
+                        <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto relative'>
                             <img src={gacha} alt="gacha" className='w-full'/>
+                            <div className='absolute top-1/2 left-3/4 transform -translate-x-1/2 -translate-y-1/2  font-bold text-lg lg:text-4xl xl:text-2xl text-center'>
+                                {ticketCount}
+                            </div>
                         </div>
-                        {/* Ticket Counter Display */}
-                        <div className='bg-black bg-opacity-50 text-white px-3 py-1 rounded-lg'>
-                            <p className='text-sm lg:text-lg xl:text-base font-bold'>
-                                Tickets: {ticketCount}
-                            </p>
-                        </div>
+                        
                     </div>
                 </header>
                 <main className='w-full flex flex-col justify-start items-center '>

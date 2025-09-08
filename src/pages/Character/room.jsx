@@ -40,8 +40,13 @@ export default function Room() {
     const [equippedCards, setEquippedCards] = useState([]);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [statRefreshTrigger, setStatRefreshTrigger] = useState(0);
+    const [ticketCount, setTicketCount] = useState(0);
 
     useEffect(() => {
+        // Load ticket count from localStorage
+        const savedTickets = localStorage.getItem('gachaTickets');
+        setTicketCount(savedTickets ? parseInt(savedTickets) : 0);
+
         // Load collected cards from localStorage
         const savedCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
         console.log('Collected cards:', savedCards);
@@ -331,6 +336,45 @@ export default function Room() {
             nonJobCards[3] || null     // fourth_item slot
         ];
     };
+
+    // Function to get unique cards with their total quantities
+    const getUniqueCardsWithQuantities = () => {
+        const cardMap = new Map();
+        
+        // Process collected cards
+        collectedCards.forEach(card => {
+            if (card) {
+                const key = card.id || card.name || card.image; // Use id, name, or image as unique identifier
+                if (cardMap.has(key)) {
+                    // If card already exists, add to quantity
+                    const existingCard = cardMap.get(key);
+                    existingCard.quantity = (existingCard.quantity || 1) + (card.quantity || 1);
+                } else {
+                    // Add new card with quantity
+                    cardMap.set(key, {
+                        ...card,
+                        quantity: card.quantity || 1
+                    });
+                }
+            }
+        });
+        
+        // Process pending card if it exists
+        if (pendingCard) {
+            const key = pendingCard.id || pendingCard.name || pendingCard.image;
+            if (cardMap.has(key)) {
+                const existingCard = cardMap.get(key);
+                existingCard.quantity = (existingCard.quantity || 1) + (pendingCard.quantity || 1);
+            } else {
+                cardMap.set(key, {
+                    ...pendingCard,
+                    quantity: pendingCard.quantity || 1
+                });
+            }
+        }
+        
+        return Array.from(cardMap.values());
+    };
     
     const displayCards = getDisplayCards();
 
@@ -359,8 +403,11 @@ export default function Room() {
                         <div className='max-w-10 lg:max-w-16 xl:max-w-12 w-full h-auto'>
                             <img src={alarm} alt="alarm" className='w-full' />
                         </div>
-                        <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
-                            <img src={gacha} alt="gacha" className='w-full'/>
+                        <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto relative'>
+                            <img src={gacha} alt="gacha" className='w-full cursor-pointer hover:opacity-80' onClick={handleTenPullClick}/>
+                            <div className='absolute top-1/2 left-3/4 transform -translate-x-1/2 -translate-y-1/2 font-bold text-lg lg:text-4xl xl:text-2xl text-center'>
+                                {ticketCount}
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -376,7 +423,7 @@ export default function Room() {
                             <img src={hero_man} alt="hero_man" className='w-full h-auto'/>
                         </div>
                         {/* Stat Display */}
-                        <div className='absolute lg:top-[-200px] xl:top-[-50px] right-0 xl:right-20 bg-white bg-opacity-90 rounded-lg p-4 shadow-lg'>
+                        <div className='absolute lg:top-[-200px] xl:top-[-50px] right-0 xl:right-20 bg-white bg-opacity-90 rounded-lg p-4 shadow-lg opacity-0'>
                             <StatDisplay refreshTrigger={statRefreshTrigger} />
                             {/* Test button for development */}
                             <button 
@@ -421,12 +468,6 @@ export default function Room() {
                                         alt={displayCards[1].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
-                                    {/* Show quantity if more than 1 */}
-                                    {displayCards[1].quantity && displayCards[1].quantity > 1 && (
-                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
-                                            {displayCards[1].quantity}
-                                        </div>
-                                    )}
                                 </div>
                             )}
                         </div>
@@ -442,12 +483,6 @@ export default function Room() {
                                         alt={displayCards[2].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
-                                    {/* Show quantity if more than 1 */}
-                                    {displayCards[2].quantity && displayCards[2].quantity > 1 && (
-                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
-                                            {displayCards[2].quantity}
-                                        </div>
-                                    )}
                                 </div>
                             )}
                         </div>
@@ -463,12 +498,6 @@ export default function Room() {
                                         alt={displayCards[3].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
-                                    {/* Show quantity if more than 1 */}
-                                    {displayCards[3].quantity && displayCards[3].quantity > 1 && (
-                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
-                                            {displayCards[3].quantity}
-                                        </div>
-                                    )}
                                 </div>
                             )}
                         </div>
@@ -484,12 +513,6 @@ export default function Room() {
                                         alt={displayCards[4].name}
                                         className='w-3/4 h-3/4 object-contain'
                                     />
-                                    {/* Show quantity if more than 1 */}
-                                    {displayCards[4].quantity && displayCards[4].quantity > 1 && (
-                                        <div className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white'>
-                                            {displayCards[4].quantity}
-                                        </div>
-                                    )}
                                 </div>
                             )}
                         </div>
@@ -501,19 +524,11 @@ export default function Room() {
                         <div className='grid grid-cols-5 gap-3 xl:gap-1 z-10 absolute xl:h-[400px] xl:pr-[500px] xl:pt-[60px]'>
                             {
                                 Array.from({ length: 20 }, (_, index) => {
-                                    let card = null;
+                                    const uniqueCards = getUniqueCardsWithQuantities();
+                                    const card = uniqueCards[index] || null;
                                     
-                                    // First slot shows pending card if available
-                                    if (index === 0 && pendingCard) {
-                                        card = pendingCard;
-                                        console.log('Slot 0 - Pending card:', card);
-                                    } else {
-                                        // Other slots show collected cards (offset by 1 if pending card exists)
-                                        const cardIndex = pendingCard ? index - 1 : index;
-                                        card = collectedCards[cardIndex];
-                                        if (card) {
-                                            console.log(`Slot ${index} - Collected card:`, card);
-                                        }
+                                    if (card) {
+                                        console.log(`Slot ${index} - Unique card:`, card);
                                     }
                                     
                                     // Show only 3 rows (15 cards) when width is 1280px

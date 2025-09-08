@@ -173,8 +173,11 @@ export default function MainMember() {
                 <div className='max-w-10 lg:max-w-16 xl:max-w-12 w-full h-auto'>
                   <img src={alarm} alt="alarm" className='w-full' />
                 </div>
-                <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto'>
+                <div className='max-w-20 lg:max-w-[400px] xl:max-w-[120px] w-full h-auto relative'>
                   <img src={gacha} alt="gacha" className='w-full' />
+                  <div className='absolute top-1/2 left-3/4 transform -translate-x-1/2 -translate-y-1/2  font-bold text-lg lg:text-4xl xl:text-2xl text-center'>
+                    {ticketCount}
+                  </div>
                 </div>
               </div>
             </header>

@@ -72,7 +72,7 @@ export class BattleDataManager {
     // Check if it's Sunday (battle day)
     static isBattleDay() {
         const today = new Date().getDay();
-        return today === 1; // 0 = Sunday
+        return today === 2; // 0 = Sunday
     }
 
     // Check if player has already battled today

@@ -45,8 +45,16 @@ export default function CardDesc() {
       // Clear the selected cards
       localStorage.removeItem('selectedJobCards');
       
-      // Navigate to character room
-      navigate('/character-room');
+      // Check if user is logged into a clan
+      const userClan = localStorage.getItem('userClan');
+      
+      if (userClan) {
+        // User is logged into a clan, redirect to bonus-sunday page
+        navigate('/bonus-sunday');
+      } else {
+        // User is not logged into a clan, redirect to bonus page
+        navigate('/bonus');
+      }
     }
   };
 

@@ -139,28 +139,49 @@ export default function Ticket() {
     
     console.log('Starting equipment removal process for:', selectedCard);
     
-    // Only remove from equipped cards, keep in player collection
+    // Remove from equipped cards
     const currentEquippedCards = JSON.parse(localStorage.getItem('equippedCards') || '[]');
     console.log('Current equipped cards before removal:', currentEquippedCards);
     
-    // Remove the selected card from equipped cards only
+    // Remove the selected card from equipped cards
     const updatedEquippedCards = currentEquippedCards.filter(card => card.id !== selectedCard.id);
     
     // Update localStorage with the filtered equipped cards
     localStorage.setItem('equippedCards', JSON.stringify(updatedEquippedCards));
     console.log('✅ Removed from equipped cards:', updatedEquippedCards);
     
-    // Verify the card is still in player collection
+    // Add the card back to player collection (item-box)
     const currentPlayerCards = JSON.parse(localStorage.getItem('playerCards') || '[]');
-    const cardStillInCollection = currentPlayerCards.some(card => card.id === selectedCard.id);
-    console.log('✅ Card still in player collection:', cardStillInCollection);
+    console.log('Current player cards before adding back:', currentPlayerCards);
+    
+    // Check if the card already exists in the collection
+    const existingCardIndex = currentPlayerCards.findIndex(card => {
+      const key = card.id || card.name || card.image;
+      const selectedKey = selectedCard.id || selectedCard.name || selectedCard.image;
+      return key === selectedKey;
+    });
+    
+    if (existingCardIndex !== -1) {
+      // If card exists, increase its quantity
+      currentPlayerCards[existingCardIndex].quantity = (currentPlayerCards[existingCardIndex].quantity || 1) + 1;
+      console.log('✅ Increased quantity for existing card:', currentPlayerCards[existingCardIndex]);
+    } else {
+      // If card doesn't exist, add it with quantity 1
+      const cardToAdd = { ...selectedCard, quantity: 1 };
+      currentPlayerCards.push(cardToAdd);
+      console.log('✅ Added new card to collection:', cardToAdd);
+    }
+    
+    // Save updated player cards
+    localStorage.setItem('playerCards', JSON.stringify(currentPlayerCards));
+    console.log('✅ Updated player cards:', currentPlayerCards);
     
     // Clear the selected card from localStorage
     localStorage.removeItem('selectedCard');
     console.log('✅ Cleared selectedCard from localStorage');
     
     // Show success message
-    alert(`"${selectedCard.name}" has been unequipped but remains in your collection!`);
+    alert(`"${selectedCard.name}" has been unequipped and returned to your item-box!`);
     
     // Redirect to character room
     navigate('/character-room');
