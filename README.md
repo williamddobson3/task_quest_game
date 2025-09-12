@@ -1,6 +1,6 @@
 # React + Vite
 
-This template provides a minimal setup to get React 
+This template provides a minimal setup to get 
 
 Currently, two official plugins are available:
 
