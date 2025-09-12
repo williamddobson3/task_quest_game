@@ -73,6 +73,10 @@ export default function ClanDescription() {
     const currentUser = localStorage.getItem('userName') || 'Player';
     const userClan = localStorage.getItem('userClan');
     
+    console.log('🔍 Current user:', currentUser);
+    console.log('🔍 Viewing clan:', clan);
+    console.log('🔍 User already in clan:', userClan);
+    
     // Check if user is already logged into a clan
     if (userClan) {
       // User is already logged into a clan
@@ -91,8 +95,19 @@ export default function ClanDescription() {
       
       // Check if user is the leader of the viewed clan
       if (clan.leaderId === currentUser) {
-        // User is the leader of this clan - login and redirect to clan-leader
-        localStorage.setItem('userClan', JSON.stringify(clan));
+        // User is the leader of this clan - ensure they're in members list and login
+        const updatedClan = {
+          ...clan,
+          members: clan.members.includes(currentUser) ? clan.members : [...clan.members, currentUser]
+        };
+        
+        // Update clan in localStorage
+        const clanList = JSON.parse(localStorage.getItem('clanList') || '[]');
+        const updatedClans = clanList.map(c => c.id === clan.id ? updatedClan : c);
+        localStorage.setItem('clanList', JSON.stringify(updatedClans));
+        localStorage.setItem('userClan', JSON.stringify(updatedClan));
+        
+        console.log('✅ Leader added to clan members:', updatedClan);
         //alert(`クラン「${clan.name}」にログインしました！`);
         navigate('/clan-leader');
       } else {
@@ -100,11 +115,13 @@ export default function ClanDescription() {
         if (clan.members.includes(currentUser)) {
           // User is already a member of this clan - login and redirect to clan-member
           localStorage.setItem('userClan', JSON.stringify(clan));
+          console.log('✅ Existing member logged in:', currentUser);
           //alert(`クラン「${clan.name}」にログインしました！`);
           navigate('/clan-member');
         } else {
           // User is not a member - try to join the clan
           if (clan.members.length >= clan.maxMembers) {
+            console.log('❌ Clan is full');
             //alert('このクランは満員です。');
             return;
           }
@@ -122,10 +139,12 @@ export default function ClanDescription() {
             localStorage.setItem('clanList', JSON.stringify(updatedClans));
             localStorage.setItem('userClan', JSON.stringify(updatedClan));
             
+            console.log('✅ New member added to clan:', updatedClan);
             //alert(`クラン「${clan.name}」に参加しました！`);
             navigate('/clan-member');
           } else {
             // Approval required - show message
+            console.log('⏳ Approval required for clan join');
             //alert(`クラン「${clan.name}」への参加申請を送信しました。リーダーの承認をお待ちください。`);
           }
         }
@@ -165,10 +184,10 @@ export default function ClanDescription() {
               alt="" 
               className="w-[120px] lg:w-[350px] xl:w-[200px] h-auto " 
             />
-            <p className="text-[40px] lg:text-[100px] xl:text-[50px] font-bold text-white ">{clan.name}</p>
+            <p className="text-[40px] lg:text-[100px] xl:text-[50px] font-bold  ">{clan.name}</p>
           </div>
           <div className="w-[300px] lg:w-[900px] xl:w-[500px] h-auto flex justify-center items-center xl:mr-100 relative">
-            <img src={filter_box} alt="" className="w-full h-auto" />
+            <img src={filter_box} alt="" className="w-full h-auto lg:h-[700px] xl:h-[400px]" />
             {/* Clan information overlay */}
             <div className="absolute inset-0 flex flex-col justify-center items-center p-8">
               <div className="text-center space-y-4">

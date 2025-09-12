@@ -14,9 +14,58 @@ export default function QuitMember() {
 
   // Handle quit confirmation
   const handleQuitConfirm = () => {
-    localStorage.removeItem('userClan');
-    //alert('クランから脱退しました。');
-    navigate('/clain-main');
+    try {
+      // Get current user's clan data before removing it
+      const userClan = localStorage.getItem('userClan');
+      if (userClan) {
+        const clanData = JSON.parse(userClan);
+        const currentUser = localStorage.getItem('userName') || 'Player';
+        
+        console.log('🔍 Current user:', currentUser);
+        console.log('🔍 User clan data:', clanData);
+        
+        // Remove user from clan list
+        const clanList = JSON.parse(localStorage.getItem('clanList') || '[]');
+        console.log('🔍 Clan list before update:', clanList);
+        
+        const updatedClanList = clanList.map(clan => {
+          if (clan.id === clanData.id) {
+            console.log('🔍 Found matching clan:', clan);
+            console.log('🔍 Clan members before:', clan.members);
+            
+            // Remove current user from members array
+            const updatedMembers = clan.members.filter(member => member !== currentUser);
+            
+            console.log('🔍 Clan members after:', updatedMembers);
+            
+            return {
+              ...clan,
+              members: updatedMembers
+            };
+          }
+          return clan;
+        });
+        
+        // Update clan list in localStorage
+        localStorage.setItem('clanList', JSON.stringify(updatedClanList));
+        console.log('🔍 Updated clan list:', updatedClanList);
+        
+        console.log('✅ User removed from clan list:', currentUser);
+      }
+      
+      // Remove user's clan membership
+      localStorage.removeItem('userClan');
+      console.log('✅ User clan membership removed');
+      
+      //alert('クランから脱退しました。');
+      navigate('/clain-main');
+      
+    } catch (error) {
+      console.error('Error quitting clan:', error);
+      // Still remove userClan even if there's an error
+      localStorage.removeItem('userClan');
+      navigate('/clain-main');
+    }
   };
 
   // Handle cancel

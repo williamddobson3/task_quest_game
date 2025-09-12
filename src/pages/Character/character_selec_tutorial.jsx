@@ -130,7 +130,7 @@ export default function Main() {
             <div className='max-w-20 lg:max-w-40 xl:max-w-20 w-full h-auto'>
               <img src={clan} alt="clan" className='w-full h-auto' />
             </div>
-          </footer>
+          </footer>g
         </div>
       </div>
       <div className='flex justify-center items-center w-full h-full z-[100] absolute '>

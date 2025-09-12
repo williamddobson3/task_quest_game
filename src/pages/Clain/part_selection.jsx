@@ -179,6 +179,14 @@ export default function PartSelection() {
     navigate('/clan-desc');
   };
 
+  // Handle train_type click
+  const handleTrainTypeClick = (e) => {
+    // Prevent event bubbling to avoid triggering clan click
+    e.stopPropagation();
+    // Navigate to task-progress page
+    navigate('/task-progress');
+  };
+
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className='w-full h-full flex justify-center items-center absolute overflow-hidden z-[-1]'>
@@ -251,7 +259,7 @@ export default function PartSelection() {
             </div>
           </div>
         )}
-        <div className="w-[300px] lg:w-[800px] xl:w-[500px] h-auto flex flex-col justify-center items-center gap-10 max-h-[700px] overflow-y-auto">
+        <div className="w-[300px] lg:w-[800px] xl:w-[500px] h-auto flex flex-col justify-start items-center gap-10 max-h-[700px] overflow-y-auto">
           {filteredAndSortedClans.length === 0 ? (
             <div className="w-full h-auto flex justify-center items-center relative">
               <img src={part_one} alt="" className='lg:w-[800px] lg:h-auto' />
@@ -266,14 +274,15 @@ export default function PartSelection() {
                 className="w-full h-auto flex justify-center items-center relative cursor-pointer hover:opacity-80"
                 onClick={() => handleClanClick(clan)}
               >
-                <img src={index % 2 === 0 ? part_one : part_two} alt="" />
+                <img src={index % 2 === 0 ? part_one : part_one} alt="" />
                 <img 
                   src={train_type} 
                   alt="" 
-                  className='absolute top-5 lg:top-15 xl:top-10 left-5 lg:left-15 xl:left-10 lg:w-[200px] xl:w-[150px]' 
+                  className='absolute top-5 lg:top-15 xl:top-10 left-5 lg:left-15 xl:left-10 lg:w-[200px] xl:w-[150px] cursor-pointer hover:opacity-80' 
+                  onClick={handleTrainTypeClick}
                 />
-                <div className='absolute top-4 lg:top-10 left-30 lg:left-70 xl:left-60 z-[100] text-white font-bold'>
-                  <p className='text-[20px] lg:text-[40px] xl:text-[30px] mb-1'>{clan.name}</p>
+                <div className='absolute top-4 lg:top-45 xl:top-25 left-30 lg:left-70 xl:left-40 z-[100]  font-bold'>
+                  <p className='text-[20px] lg:text-[60px] xl:text-[30px] mb-1'>{clan.name}</p>
                   <p className='text-[12px] lg:text-[20px] xl:text-[16px] opacity-80'>
                     {categoryNames[clan.category]} | {activityLevelNames[clan.activityLevel]} | {joinMethodNames[clan.joinMethod]}
                   </p>

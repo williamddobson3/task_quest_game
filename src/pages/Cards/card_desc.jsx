@@ -66,6 +66,20 @@ export default function CardDesc() {
     setCurrentCardIndex(1);
   };
 
+  const handleScrollDown = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  };
+
+  const handleScrollUp = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const getCardImage = (card) => {
     if (!card) return getFallbackImageUrl();
     
@@ -100,13 +114,13 @@ export default function CardDesc() {
             <div className="w-auto h-auto flex justify-center items-center flex-col gap-5 xl:mb-[100px] ">
               <div className="w-[300px] lg:w-[600px] flex justify-center items-center relative ">
                 <img src={battle_board} alt="" className="w-full h-auto" />
-                <div className="absolute top-7 lg:top-18 left-7 lg:left-13 w-[250px] lg:w-[500px] lg:text-[35px]">
+                <div className="absolute top-7 lg:top-18 left-7 lg:left-13 w-[250px] lg:w-[500px] lg:text-[35px] xl:text-[30px]">
                   <p className="font-bold">{currentCard.type} {currentCard.name} {currentCard.rarity}</p>
                   <p className="mt-2">{currentCard.description}</p>
                 </div>
               </div>
               <div className="w-full h-auto justify-center items-center flex flex-col gap-5 lg:mt-[60px] xl:mt-[10px] ">
-                <div className="w-auto h-auto flex justify-center items-center gap-10">
+                <div className="w-auto h-auto flex justify-center items-center gap-10  z-[1000000]">
                   <img 
                     src={previous_half} 
                     alt="" 
@@ -117,7 +131,7 @@ export default function CardDesc() {
                     src={next_full} 
                     alt="" 
                     className="w-[90px] lg:w-[150px] cursor-pointer hover:opacity-80" 
-                    onClick={handleNextClick}
+                    onClick={handleScrollDown}
                   />
                 </div>
                 <div className="w-full h-auto flex justify-end items-center lg:absolute lg:bottom-[50px] lg:right-[80px] ">
@@ -150,12 +164,12 @@ export default function CardDesc() {
                 </div>
               </div>
               <div className="w-full h-auto justify-center items-center flex flex-col gap-5 lg:mt-[60px] xl:mt-[20px] ">
-                <div className="w-auto h-auto flex justify-center items-center gap-10">
+                <div className="w-auto h-auto flex justify-center items-center gap-10   z-[1000000]">
                   <img 
                     src={previous_full} 
                     alt="" 
                     className="w-[90px] lg:w-[150px] cursor-pointer hover:opacity-80" 
-                    onClick={handlePreviousClick}
+                    onClick={handleScrollUp}
                   />
                   <img 
                     src={next_half} 

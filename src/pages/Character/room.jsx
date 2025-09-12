@@ -457,7 +457,7 @@ export default function Room() {
                     </div>
                     <div className='w-full h-[200px] lg:h-[400px] xl:h-[200px] flex justify-center items-center xl:justify-end xl:pr-10 xl:pb-60 gap-3 mt-[75px] lg:mt-[25px] xl:mt-0'>
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
-                            <img src={first_item} alt="first_item" className='w-full h-auto'/>
+                            <img src={first_item} alt="first_item" className='w-full h-auto opacity-0'/>
                             {displayCards[1] && (
                                 <div 
                                     className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute'
@@ -472,7 +472,7 @@ export default function Room() {
                             )}
                         </div>
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
-                            <img src={second_item} alt="second_item" className='w-full h-auto'/>
+                            <img src={second_item} alt="second_item" className='w-full h-auto opacity-0'/>
                             {displayCards[2] && (
                                 <div 
                                     className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute'
@@ -487,7 +487,7 @@ export default function Room() {
                             )}
                         </div>
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
-                            <img src={third_item} alt="third_item" className='w-full h-auto'/>
+                            <img src={third_item} alt="third_item" className='w-full h-auto opacity-0'/>
                             {displayCards[3] && (
                                 <div 
                                     className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute'
@@ -502,7 +502,7 @@ export default function Room() {
                             )}
                         </div>
                         <div className='w-[100px] lg:w-[200px] xl:w-[150px] h-auto relative'>
-                            <img src={fourth_item} alt="fourth_item" className='w-full h-auto'/>
+                            <img src={fourth_item} alt="fourth_item" className='w-full h-auto opacity-0'/>
                             {displayCards[4] && (
                                 <div 
                                     className='absolute inset-0 flex items-center justify-center cursor-pointer hover:opacity-80 absolute   '

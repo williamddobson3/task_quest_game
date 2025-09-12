@@ -11,22 +11,39 @@ export default function QuitCreate() {
   // Handle quit confirmation (delete clan)
   const handleQuitConfirm = () => {
     if (window.confirm('クランを削除しますか？この操作は取り消せません。')) {
-      // Get clan data before removing
-      const userClan = localStorage.getItem('userClan');
-      if (userClan) {
-        const clanData = JSON.parse(userClan);
+      try {
+        // Get clan data before removing
+        const userClan = localStorage.getItem('userClan');
+        if (userClan) {
+          const clanData = JSON.parse(userClan);
+          
+          console.log('🔍 Clan to delete:', clanData);
+          
+          // Remove from clan list
+          const existingClans = JSON.parse(localStorage.getItem('clanList') || '[]');
+          console.log('🔍 Clan list before deletion:', existingClans);
+          
+          const updatedClans = existingClans.filter(clan => clan.id !== clanData.id);
+          console.log('🔍 Clan list after deletion:', updatedClans);
+          
+          localStorage.setItem('clanList', JSON.stringify(updatedClans));
+          
+          console.log('✅ Clan removed from clan list:', clanData.name);
+        }
         
-        // Remove from clan list
-        const existingClans = JSON.parse(localStorage.getItem('clanList') || '[]');
-        const updatedClans = existingClans.filter(clan => clan.id !== clanData.id);
-        localStorage.setItem('clanList', JSON.stringify(updatedClans));
+        // Remove user clan
+        localStorage.removeItem('userClan');
+        console.log('✅ User clan membership removed');
+        
+        //alert('クランを削除しました。');
+        navigate('/clain-main');
+        
+      } catch (error) {
+        console.error('Error deleting clan:', error);
+        // Still remove userClan even if there's an error
+        localStorage.removeItem('userClan');
+        navigate('/clain-main');
       }
-      
-      // Remove user clan
-      localStorage.removeItem('userClan');
-      
-      //alert('クランを削除しました。');
-      navigate('/clain-main');
     }
   };
 
