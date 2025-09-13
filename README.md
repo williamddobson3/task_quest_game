@@ -1,6 +1,6 @@
 # React + Vite
 
-This template 
+This tem
 
 Currently, two official plugins are available:
 
