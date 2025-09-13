@@ -1,6 +1,6 @@
 # React + Vite
 
-This tem
+This 
 
 Currently, two official plugins are available:
 
