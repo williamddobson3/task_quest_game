@@ -1,6 +1,6 @@
 # React + Vite
 
-This template provides a
+This template 
 
 Currently, two official plugins are available:
 
